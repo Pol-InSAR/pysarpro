@@ -1,0 +1,22 @@
+include MANIFEST.in
+include pyproject.toml
+include *.md
+include *.txt
+include *.rst
+recursive-include requirements *.txt
+recursive-include . meson.build
+include requirements/README.md
+include Makefile
+include pysarpro/restoration/unwrap_*_ljmu.c
+recursive-include pysarpro *.pyx *.pxd *.pxi *.py *.pyi *.h *.ini *.npy *.txt *.in *.md
+recursive-include pysarpro/data *
+recursive-include pysarpro/*/tests/data *
+
+include doc/Makefile
+recursive-include doc/examples *.txt
+recursive-include doc/source *.rst
+recursive-include doc/tools *.txt
+recursive-include doc/source/_templates *.html
+recursive-include doc *.py
+prune doc/build
+prune doc/gh-pages

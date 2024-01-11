@@ -1,0 +1,206 @@
+[project]
+name = 'pysarpro'
+description = 'Image processing in Python'
+requires-python = '>=3.10'
+readme = 'README.md'
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Environment :: Console',
+    'Intended Audience :: Developers',
+    'Intended Audience :: Science/Research',
+    'License :: OSI Approved :: BSD License',
+    'Programming Language :: C',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3 :: Only',
+    'Topic :: Software Development :: Libraries',
+    'Topic :: Scientific/Engineering',
+    'Operating System :: Microsoft :: Windows',
+    'Operating System :: POSIX',
+    'Operating System :: Unix',
+    'Operating System :: MacOS',
+]
+dynamic = ['version']
+dependencies = [
+    'numpy>=1.23',
+    'scipy>=1.8',
+    'networkx>=2.8',
+    'pillow>=9.1',
+    'imageio>=2.33',
+    'tifffile>=2022.8.12',
+    'packaging>=21',
+    'lazy_loader>=0.3',
+]
+
+[[project.maintainers]]
+name = 'pysarpro developers'
+email = 'pysarpro-core@@imansour.net'
+
+[project.license]
+file = 'LICENSE.txt'
+
+[project.optional-dependencies]
+build = [
+    # Also update [build-system] -> requires
+    'meson-python>=0.15',
+    'wheel',
+    'setuptools>=67',
+    'packaging>=21',
+    'ninja',
+    'Cython>=3.0.4',
+    'pythran',
+    'numpy>=1.23',
+    # Developer UI
+    'spin==0.7',
+    'build',
+]
+data = ['pooch>=1.6.0']
+developer = [
+    'pre-commit',
+    'ipython',
+    "tomli; python_version < '3.11'",
+]
+docs = [
+    'sphinx>=7.2',
+    'sphinx-gallery>=0.14',
+    'numpydoc>=1.6',
+    'sphinx-copybutton',
+    'pytest-runner',
+    'matplotlib>=3.6',
+    'dask[array]>=2022.9.2',
+    'pandas>=1.5',
+    'seaborn>=0.11',
+    'pooch>=1.6',
+    'tifffile>=2022.8.12',
+    'myst-parser',
+    'ipywidgets',
+    'ipykernel',  # needed until https://github.com/jupyter-widgets/ipywidgets/issues/3731 is resolved
+    'plotly>=5.10',
+    'kaleido',
+    'scikit-learn>=1.1',
+    'sphinx_design>=0.5',
+    'pydata-sphinx-theme>=0.14.1',
+    'PyWavelets>=1.1.1',
+]
+optional = [
+    'SimpleITK',
+    'astropy>=5.0',
+    'cloudpickle>=0.2.1',  # necessary to provide the 'processes' scheduler for dask
+    'dask[array]>=2021.1.0',
+    'matplotlib>=3.6',
+    'pooch>=1.6.0',
+    'pyamg',
+    'PyWavelets>=1.1.1',
+    'scikit-learn>=1.1',
+]
+test = [
+    'asv',
+    'matplotlib>=3.6',
+    'numpydoc>=1.5',
+    'pooch>=1.6.0',
+    'pytest>=7.0',
+    'pytest-cov>=2.11.0',
+    'pytest-localserver',
+    'pytest-faulthandler',
+]
+
+[project.urls]
+homepage = 'https://pysarpro.org'
+documentation = 'https://pysarpro.org/docs/stable'
+source = 'https://github.com/Pol-InSAR/Pol-InSAR/pysarpro'
+download = 'https://pypi.org/project/pysarpro/#files'
+tracker = 'https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/issues'
+
+[build-system]
+build-backend = 'mesonpy'
+requires = [
+    'meson-python>=0.15',
+    'wheel',
+    'setuptools>=67',
+    'packaging>=21',
+    'Cython>=3.0.4',
+    'pythran',
+    'lazy_loader>=0.3',
+    'numpy>=1.25',
+]
+
+[tool.spin]
+package = 'pysarpro'
+
+[tool.spin.commands]
+Build = [
+    'spin.cmds.meson.build',
+    'spin.cmds.meson.test',
+    'spin.cmds.build.sdist',
+]
+Environments = [
+    'spin.cmds.meson.run',
+    '.spin/cmds.py:ipython',
+    'spin.cmds.meson.python',
+]
+Documentation = ['.spin/cmds.py:docs']
+Metrics = [
+    '.spin/cmds.py:asv'
+]
+
+[tool.black]
+target-version = ['py310', 'py311', 'py312']
+skip-string-normalization = 1
+
+[tool.ruff]
+line-length = 88
+target-version = 'py310'
+select = [
+    'F',
+    'E',
+    'W',
+    'UP',
+]
+ignore = [
+    'E501',
+    'E741',
+    'E712',
+]
+exclude = [
+    '.git',
+    '.ruff_cache',
+    'build',
+    'build-install',
+    'dist',
+    'doc/source/auto_examples',
+]
+
+[tool.ruff.per-file-ignores]
+"**/__init__.py" = [
+    'E402',
+    'F401',
+    'F403',
+    'F405',
+]
+"**/__init__.pyi" = [
+    'E402',
+    'F401',
+    'F403',
+    'F405',
+]
+"pysarpro/_shared/testing.py" = ['F401']
+"doc/examples/**/*.py" = ['E402']
+
+[tool.ruff.pydocstyle]
+convention = 'numpy'
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra  --strict-config  --strict-markers"
+log_cli_level = "INFO"
+xfail_strict = true
+#testpaths = ["pysarpro", "../../../../../benchmarks"]
+python_files = ["benchmark_*.py", "test_*.py"]
+python_classes = ["Test*", "*Suite"]
+python_functions = ["time_*", "test_*", "peakmem_*"]
+filterwarnings = []
+
+[tool.coverage.run]
+omit = ['*/tests/*']

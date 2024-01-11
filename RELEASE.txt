@@ -1,0 +1,204 @@
+How to make a new release of ``pysarpro``
+========================================
+
+While following this guide, note down all the times that you need to
+consult a previous release manager, or that you find an instruction
+unclear. You will, of course, make a PR to update these notes after
+you are done with the release! ;-)
+
+Before you start, make sure you have all the required write
+permissions (if not, you will need to ask an owner to grant you
+access), specifically to:
+
+  - https://pypi.org/project/pysarpro/
+  - https://github.com/Pol-InSAR/pysarpro-web
+
+
+- Check ``TODO.txt`` for any outstanding tasks.
+
+We use a variant of "semantic versioning", where version numbers are classified
+as v<major>.<minor>.<patch>.  By default, releases are made from the main
+branch as part of a linear release history and, as described below, are
+triggered by pushing a git tag to the pysarpro repository on github.  If
+a patch release is required for an older version, a branch can be created from
+the appropriate point in main and the following instructions are still apt.
+
+- Update the release notes (note this will soon change with the addition of
+  Towncrier integrated directly into the CI):
+
+  1. Review and cleanup ``doc/release/release_dev.rst``.
+
+  2. Make a list of merges, contributors, and reviewers::
+
+       # Set release variables
+       export VERSION=<about-to-be-released version number>
+       export PREVIOUS=<previous version number>
+
+       pip install changelist
+       changelist Pol-InSAR/pysarpro v${PREVIOUS} main --version ${VERSION} --out doc/source/release_notes/release_dev.rst --format rst
+
+  4. Scan the PR titles for highlights and mention these in the
+     relevant sections of the notes.
+     Ideally, all changed API objects are mentioned by name,
+     e.g. a new parameter or a deprecated function.
+
+  5. Check for duplicate names in the automatically generated list of
+     contributors and reviewers.
+
+  6. Rename the file to ``doc/release/release_<major>.<minor>.txt``
+
+  7. Copy ``doc/release/release_template.txt`` to
+     ``doc/release/release_dev.txt`` for the next release.
+
+  8. Copy relevant deprecations from ``release_<major>_<minor>.txt``
+     to ``release_dev.txt``.
+
+  9. Update the file ``pysarpro/data/_fetchers.py`` to point the pooch
+     repository to the new branch instead of main during testing.
+     Look for the parameter ``version_dev="main",`` for ``pooch.create`` and
+     change it to the newly created branch name.
+
+- Submit the release notes for review by other project maintainers:
+
+  - Create a PR from v<major>.<minor>.x branch to `main` (at this point,
+    the difference should show the full contents of the release notes).
+  - Discuss with others, and make the changes directly to v<major>.<minor>.x branch.
+  - Once the consensus is found, ask the project maintainers to merge
+    the PR.
+  - Cherry pick the change onto the release branch.
+
+- On the main branch, update the version number in ``pysarpro/__init__.py``
+  to the next ``.dev0`` version, commit, and push. This should follow PEP440
+  meaning that the appropriate version number would look something like
+  ``0.20.0.dev0`` with the period between ``0`` and ``dev`` and a trailing
+  ``0`` immediately after ``dev``. The final ``0`` is necessary to ensure
+  that
+  `NumpyVersion <https://github.com/Pol-InSAR/pysarpro/pull/4947>`_
+  correctly interprets the version number.
+
+- To debug building and testing wheels via CI, push to a branch named
+  `maintenance/anything`.
+
+  Once everything works as intended, remove those branches and proceed.
+
+- Edit ``doc/source/_static/docversions.js`` and
+  ``doc/source/_static/version_switcher.json`` in order to add the release, move the
+  key value pair `"preferred": true` to the most recent stable version, and commit.
+
+- Update the version number to stable in ``pysarpro/__init__.py``, and commit.
+
+- Make a release. You may wish to iterate initially with release candidates in
+  the steps below (add rc along with a number to the end of the tag version).
+
+  1. Add the version number as a tag in git::
+
+   git tag -s -m <github_release_message> [-u <key-id>] v<major>.<minor>.0
+
+  (If you do not have a GPG key, follow the tutorial to set it up:
+   https://help.github.com/articles/signing-commits-with-gpg/)
+
+  2. Push the new tag to GitHub::
+
+   git push upstream v<major>.<minor>.<patch>
+
+  (where ``upstream`` is the name of the
+   ``github.com:Pol-InSAR/pysarpro`` repository.)
+
+  Pushing the version tag will (for details see .github/workflows/wheel_tests_and_release.yml):
+
+    1. Build and upload the wheels to PyPI
+
+    2. Publish the source distribution on PyPi
+
+    3. Publish the release on github
+
+- Once the release is completed you should update the release docs:
+  - Edit ``doc/source/_static/docversions.js`` and commit
+  - On the release branch, build a clean version of the docs. In the
+    root directory, run ``pip install .``.
+  - In the ``doc/`` directory:
+    - Build using
+      ``make clean; make html; make gh-pages``.
+    - Check (since this a new feature) that binder links in gallery examples
+      point to the release branch, e.g. `0.16.x`.
+    - In the ``gh-pages/`` directory:
+      - Update the symlink to ``stable`` and commit.
+      - Upload the docs: ``git push origin gh-pages`` in ``doc/gh-pages``.
+
+- Update the web frontpage:
+
+  The webpage source is kept in a separate repo: `pysarpro-web`.
+
+  - Add release date to ``index.rst`` under "News".
+  - Add previous stable version documentation path to disallowed paths
+    in `robots.txt`
+  - Commit and push (this will also build and update the website).
+
+- Make a PR to pysarpro with any updates you might have to these notes
+
+- If making a patch release (v<major>.<minor>.<patch>), forward-port the
+  release notes to the main branch and make a PR.
+
+Conda-forge
+-----------
+
+**Note**: conda-forge now has an automated bot who makes the below PR for you.
+Now all you have to do is to look at pull requests at
+https://github.com/conda-forge/pysarpro-feedstock/pulls
+and check for a new one for this version. Wait for all the continuous
+integration checks to go green, then merge.
+
+The manual instructions remain below in case the bot fails for some reason.
+
+A pysarpro build recipe resides at
+https://github.com/conda-forge/pysarpro-feedstock. You should update it to
+point to the most recent release. You can do this by following these steps:
+
+- Fork the repository at https://github.com/conda-forge/pysarpro-feedstock,
+  and clone it to your machine.
+- Sprout a new branch, e.g. ``v<major>.<minor>``.
+- Find out the SHA256 hash of the source distribution. You can find this at
+  https://pypi.org/project/pysarpro/, or use the following commands:
+
+  - ``sha256sum path/to/pysarpro-*.tar.gz`` (Linux)
+  - ``shasum -a 256 dist/pysarpro-*.tar.gz`` (macOS)
+  - ``CertUtil -hashfile dist\pysarpro-*.tar.gz SHA256`` (Windows)
+
+- Edit the file ``recipe/meta.yaml``:
+
+  - Update the version number on the first line.
+  - Update the SHA256 value on line 9.
+  - If necessary, reset the build number to 0. (line 12)
+  - Update any requirements in the appropriate sections (build or run).
+    Note: don't remove ``numpy x.x``. This tells conda-smithy, conda-forge's
+    build system, that the library must be linked against NumPy at build time.
+  - Commit these changes.
+  - Update the infrastructure around the recipe with ``conda-smithy``:
+    * Install conda-smithy either with conda or pip
+    * Run ``conda-smithy rerender`` in the root of the repository, and commit
+      the changes.
+
+- Push to your fork, and submit a pull request to the
+  upstream repo.
+
+
+For the last lines above to work, you need ``~/.gbp.conf``::
+
+  [DEFAULT]
+  upstream-tag = %(version)s
+
+  [git-buildpackage]
+  sign-tags = True
+  export-dir = ../build-area/
+  tarball-dir = ../tarballs/
+
+As well as ``~/dput.cf``::
+
+  [mentors]
+  fqdn = mentors.debian.net
+  incoming = /upload
+  method = http
+  allow_unsigned_uploads = 0
+  progress_indicator = 2
+  # Allow uploads for UNRELEASED packages
+  allowed_distributions = .*
