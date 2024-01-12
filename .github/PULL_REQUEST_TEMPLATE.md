@@ -12,9 +12,9 @@
 
 - A descriptive but concise pull request title
 - [Docstrings for all functions](https://github.com/numpy/numpy/blob/master/doc/example.py)
-- [Unit tests](https://pysarpro.org/docs/dev/development/contribute.html#testing)
+- [Unit tests](https://pol-insar.github.io/docs/dev/development/contribute.html#testing)
 - A gallery example in `./doc/examples` for new features
-- [Contribution guide](https://pysarpro.org/docs/dev/development/contribute.html) is followed
+- [Contribution guide](https://pol-insar.github.io/docs/dev/development/contribute.html) is followed
 
 ## Release note
 
