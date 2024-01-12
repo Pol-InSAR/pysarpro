@@ -7,7 +7,7 @@ check the [issue tracker](https://github.com/Pol-InSAR/pysarpro/issues)
 for existing similar issues.
 
 Other development-related discussions take place on our [developer
-forum](https://discuss.scientific-python.org/c/contributor/skimage).
+forum](https://discuss.scientific-python.org/c/contributor/pysarpro).
 
 ## User support
 
@@ -20,6 +20,6 @@ across multiple software languages and packages.
 
 ### Real-time Chat
 
-[skimage zulip](https://skimage.zulipchat.com): Our real-time chat forum.
+[pysarpro zulip](https://pysarpro.zulipchat.com): Our real-time chat forum.
 Drop in to ask questions, say hello, or let us know how you are using
 pysarpro!

@@ -11,7 +11,7 @@ body:
         Before creating a new issue, please check the
         [issue tracker](https://github.com/Pol-InSAR/pysarpro/issues?q=label%3A%22%3Apray%3A+Feature+request%22)
         for similar issues or reach out on our
-        [developer discussion forum](https://discuss.scientific-python.org/c/contributor/skimage)
+        [developer discussion forum](https://discuss.scientific-python.org/c/contributor/pysarpro)
         if your are unsure whether this is a good fit for pysarpro.
 
   - type: textarea

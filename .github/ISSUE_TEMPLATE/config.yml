@@ -1,7 +1,7 @@
 blank_issues_enabled: true
 contact_links:
   - name: "Discuss development and contributions"
-    url: https://discuss.scientific-python.org/c/contributor/skimage
+    url: https://discuss.scientific-python.org/c/contributor/pysarpro
     about: >
       Discuss the development of pysarpro on our development forum. This is
       a good place for longer-form discussions, project-wide topics, decision
@@ -14,7 +14,7 @@ contact_links:
       community across multiple software packages, that has likely worked on a
       similar problem.
   - name: "Chat with us"
-    url: https://skimage.zulipchat.com/
+    url: https://pysarpro.zulipchat.com/
     about: >
       Chat with us on Zulip. Feel free to ask questions there or just say hello
       and let us know how you are using pysarpro!
