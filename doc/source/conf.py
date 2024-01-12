@@ -182,7 +182,7 @@ html_theme_options = {
     "pygment_light_style": "default",
     "pygment_dark_style": "github-dark",
     "analytics": {
-        "plausible_analytics_domain": "pysarpro.org",
+        "plausible_analytics_domain": "pol-insar.github.io",
         "plausible_analytics_url": ("https://views.scientific-python.org/js/script.js"),
     },
     # Silence warning in pydata-sphinx-theme v0.14.2

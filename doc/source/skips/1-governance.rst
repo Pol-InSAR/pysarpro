@@ -142,7 +142,7 @@ Decisions (in addition to adding core developers and SC membership as above)
 are made according to the following rules:
 
 - **Minor documentation changes**, such as typo fixes, or addition / correction of a
-  sentence (but no change of the pysarpro.org landing page or the “about”
+  sentence (but no change of the pol-insar.github.io landing page or the “about”
   page), require approval by a core developer *and* no disagreement or requested
   changes by a core developer on the issue or pull request page (lazy
   consensus). Core developers are expected to give “reasonable time” to others
