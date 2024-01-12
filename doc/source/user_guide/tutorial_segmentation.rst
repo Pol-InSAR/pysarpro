@@ -18,7 +18,7 @@ thresholding segmentation is not sufficient.
 ::
 
     >>> from pysarpro.exposure import histogram
-    >>> coins = sarprodata.coins()
+    >>> coins = sarpro.data.coins()
     >>> hist, hist_centers = sarproexposure.histogram(coins)
 
 Simply thresholding the image leads either to missing significant parts

@@ -95,7 +95,7 @@ may expect an image in [0, 1]. In general, unless a function has a
 be automatically rescaled.
 
 
-    >>> image = sarprodata.coins()
+    >>> image = sarpro.data.coins()
     >>> image.dtype, image.min(), image.max(), image.shape
     (dtype('uint8'), 1, 252, (303, 384))
     >>> rescaled = sarprotransform.rescale(image, 0.5)

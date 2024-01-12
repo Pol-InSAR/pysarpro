@@ -29,7 +29,7 @@ loops. Here is an example of such repetitive tasks:
 
 
     # Prepare images
-    hubble = sarprodata.hubble_deep_field()
+    hubble = sarpro.data.hubble_deep_field()
     width = 10
     pics = sarproutil.view_as_windows(
         hubble, (width, hubble.shape[1], hubble.shape[2]), step=width

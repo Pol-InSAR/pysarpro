@@ -9,7 +9,7 @@ common operations can be achieved using standard NumPy methods for
 manipulating arrays::
 
     >>> import pysarpro as sarpro
-    >>> camera = sarprodata.camera()
+    >>> camera = sarpro.data.camera()
     >>> type(camera)
     <type 'numpy.ndarray'>
 
@@ -114,7 +114,7 @@ Color images
 All of the above remains true for color images. A color image is a
 NumPy array with an additional trailing dimension for the channels::
 
-    >>> cat = sarprodata.chelsea()
+    >>> cat = sarpro.data.chelsea()
     >>> type(cat)
     <type 'numpy.ndarray'>
     >>> cat.shape
@@ -137,7 +137,7 @@ the grayscale image above:
    :caption: Using a 2D mask on a 2D color image
 
    import pysarpro as sarpro
-   cat = sarprodata.chelsea()
+   cat = sarpro.data.chelsea()
    reddish = cat[:, :, 0] > 160
    cat[reddish] = [0, 255, 0]
    plt.imshow(cat)

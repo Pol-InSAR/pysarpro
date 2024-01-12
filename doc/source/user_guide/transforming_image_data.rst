@@ -49,7 +49,7 @@ Converting an RGBA image to an RGB image by alpha blending it with a
 background is realized with :func:`rgba2rgb` ::
 
     >>> import pysarpro as sarpro
-    >>> img_rgba = sarprodata.logo()
+    >>> img_rgba = sarpro.data.logo()
     >>> img_rgb = sarprocolor.rgba2rgb(img_rgba)
 
 Conversion between color and gray values
@@ -58,7 +58,7 @@ Conversion between color and gray values
 Converting an RGB image to a grayscale image is realized with
 :func:`rgb2gray` ::
 
-    >>> img = sarprodata.astronaut()
+    >>> img = sarpro.data.astronaut()
     >>> img_gray = sarprocolor.rgb2gray(img)
 
 :func:`rgb2gray` uses a non-uniform weighting of color channels, because of the
@@ -88,7 +88,7 @@ images, the same operation is done for each channel. This operation can be achie
 with :py:func:`pysarpro.util.invert`::
 
     >>> import pysarpro as sarpro
-    >>> img = sarprodata.camera()
+    >>> img = sarpro.data.camera()
     >>> inverted_img = sarproutil.invert(img)
 
 Painting images with labels
@@ -155,7 +155,7 @@ stretching pixel values to the whole allowed range, using a linear
 transformation::
 
     >>> import pysarpro as sarpro
-    >>> text = sarprodata.text()
+    >>> text = sarpro.data.text()
     >>> text.min(), text.max()
     (10, 197)
     >>> better_contrast = sarproexposure.rescale_intensity(text)
@@ -168,7 +168,7 @@ pixel values using percentiles of the image improves the contrast (at the
 expense of some loss of information, because some pixels are saturated by
 this operation)::
 
-    >>> moon = sarprodata.moon()
+    >>> moon = sarpro.data.moon()
     >>> v_min, v_max = np.percentile(moon, (0.2, 99.8))
     >>> v_min, v_max
     (10.0, 186.0)

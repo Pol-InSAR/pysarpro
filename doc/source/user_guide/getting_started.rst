@@ -8,7 +8,7 @@ Getting started
 
 Most functions of ``pysarpro`` are found within submodules: ::
 
-    >>> camera = sarprodata.camera()
+    >>> camera = sarpro.data.camera()
 
 A list of submodules and functions is found on the `API reference
 <https://pol-insar.github.io/docs/stable/api/api.html>`_ webpage.
@@ -26,7 +26,7 @@ The :mod:`pysarpro.data` submodule provides a set of functions returning
 example images, that can be used to get started quickly on using
 pysarpro's functions: ::
 
-    >>> coins = sarprodata.coins()
+    >>> coins = sarpro.data.coins()
     >>> threshold_value = sarprofilters.threshold_otsu(coins)
     >>> threshold_value
     107
@@ -35,7 +35,7 @@ Of course, it is also possible to load your own images as NumPy arrays
 from image files, using :func:`pysarpro.io.imread`: ::
 
     >>> import os
-    >>> filename = os.path.join(sarprodata_dir, 'moon.png')
+    >>> filename = os.path.join(sarpro.data_dir, 'moon.png')
     >>> moon = sarproio.imread(filename)
 
 Use `natsort <https://pypi.org/project/natsort/>`_ to load multiple images ::

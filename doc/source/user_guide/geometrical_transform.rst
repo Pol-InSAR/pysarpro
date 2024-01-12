@@ -14,7 +14,7 @@ this operation is done for all color channels (the color dimension is the last,
 third dimension)::
 
    >>> import pysarpro as sarpro
-   >>> img = sarprodata.astronaut()
+   >>> img = sarpro.data.astronaut()
    >>> top_left = img[:100, :100]
 
 In order to change the shape of the image, :mod:`pysarpro.color` provides several
@@ -73,7 +73,7 @@ represented with finite coordinates.
 
 Transformations can be applied to images using :func:`pysarpro.transform.warp`::
 
-   img = sarproutil.img_as_float(sarprodata.chelsea())
+   img = sarproutil.img_as_float(sarpro.data.chelsea())
    tf_img = sarprotransform.warp(img, tform.inverse)
 
 .. image:: ../auto_examples/transform/images/sphx_glr_plot_transform_types_001.png
@@ -86,7 +86,7 @@ method in order to estimate the parameters of the transformation from two sets
 of points (the source and the destination), as explained in the
 :ref:`sphx_glr_auto_examples_transform_plot_geometric.py` tutorial::
 
-   text = sarprodata.text()
+   text = sarpro.data.text()
 
    src = np.array([[0, 0], [0, 50], [300, 50], [300, 0]])
    dst = np.array([[155, 15], [65, 40], [260, 130], [360, 95]])
