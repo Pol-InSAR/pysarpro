@@ -278,8 +278,12 @@ before you get started.
   conda install -c conda-forge --file requirements/default.txt
   conda install -c conda-forge --file requirements/test.txt
   conda install -c conda-forge pre-commit
+  # Install main development and runtime dependencies
+  pip install -r requirements.txt
   # Install build dependencies of pysarpro
   pip install -r requirements/build.txt
+  # Install docs dependencies of pysarpro
+  pip install -r requirements/docs.txt
   # Build pysarpro from source
   spin build
   # The new version lives under `${PWD}/build-install/.../site-packages`.

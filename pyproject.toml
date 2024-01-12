@@ -107,8 +107,8 @@ test = [
 ]
 
 [project.urls]
-homepage = 'https://pysarpro.org'
-documentation = 'https://pysarpro.org/docs/stable'
+homepage = 'https://pol-insar.github.io'
+documentation = 'https://pol-insar.github.io/docs/stable'
 source = 'https://github.com/Pol-InSAR/Pol-InSAR/pysarpro'
 download = 'https://pypi.org/project/pysarpro/#files'
 tracker = 'https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/issues'

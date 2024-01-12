@@ -169,7 +169,7 @@ Once you've fixed all merge conflicts, do::
 .. note::
 
    Advanced Git users are encouraged to `rebase instead of merge
-   <https://pysarpro.org/docs/dev/gitwash/development_workflow.html#rebasing-on-trunk>`__,
+   <https://pol-insar.github.io/docs/dev/gitwash/development_workflow.html#rebasing-on-trunk>`__,
    but we squash and merge most PRs either way.
 
 Guidelines
