@@ -1,3 +1,3 @@
-.. pysarpro .. _`pysarpro`: https://pysarpro.org .. _`pysarpro github`:
+.. pysarpro .. _`pysarpro`: https://pol-insar.github.io .. _`pysarpro github`:
 https://github.com/Pol-InSAR/Pol-InSAR/pysarpro .. _`pysarpro developer forum`:
 https://discuss.scientific-python.org/c/contributor/pysarpro

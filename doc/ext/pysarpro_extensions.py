@@ -99,7 +99,7 @@ def write_random_js(app, exception):
 
     image_urls = []
     tutorial_urls = []
-    url_root = "https://pysarpro.org/docs/dev/"
+    url_root = "https://pol-insar.github.io/docs/dev/"
     examples = build_dir.rglob("auto_examples/**/plot_*.html")
     for example in examples:
         image_name = f"sphx_glr_{example.stem}_001.png"

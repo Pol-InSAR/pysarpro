@@ -275,7 +275,7 @@ References and Footnotes
    `GitHub <https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/tree/main/doc/source/skips>`_.
 
 .. [2] The URL for viewing SKIPs on the web is
-   https://pysarpro.org/docs/stable/skips/
+   https://pol-insar.github.io/docs/stable/skips/
 
 .. _repo: https://github.com/Pol-InSAR/Pol-InSAR/pysarpro
 
@@ -284,7 +284,7 @@ References and Footnotes
 .. _issue tracker: https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/issues
 
 .. _pysarpro Steering Council:
-   https://pysarpro.org/docs/stable/skips/1-governance.html
+   https://pol-insar.github.io/docs/stable/skips/1-governance.html
 
 .. _`GitHub pull request`: https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/pulls
 

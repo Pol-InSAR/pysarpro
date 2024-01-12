@@ -11,7 +11,7 @@ Most functions of ``pysarpro`` are found within submodules: ::
     >>> camera = sarprodata.camera()
 
 A list of submodules and functions is found on the `API reference
-<https://pysarpro.org/docs/stable/api/api.html>`_ webpage.
+<https://pol-insar.github.io/docs/stable/api/api.html>`_ webpage.
 
 Within pysarpro, images are represented as NumPy arrays, for
 example 2-D arrays for grayscale 2-D images ::

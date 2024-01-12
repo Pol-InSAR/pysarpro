@@ -150,7 +150,7 @@ html_theme_options = {
             "pysarpro's logo, showing a snake's head overlayed with green " "and orange"
         ),
         "text": "pysarpro",
-        "link": "https://pysarpro.org",
+        "link": "https://pol-insar.github.io",
     },
     "header_links_before_dropdown": 6,
     "icon_links": [
@@ -169,7 +169,9 @@ html_theme_options = {
     "navbar_end": ["version-switcher", "navbar-icon-links"],
     "show_prev_next": False,
     "switcher": {
-        "json_url": ("https://pysarpro.org/docs/dev/_static/version_switcher.json"),
+        "json_url": (
+            "https://pol-insar.github.io/docs/dev/_static/version_switcher.json"
+        ),
         "version_match": "dev" if "dev" in version else version,
     },
     "show_version_warning_banner": True,

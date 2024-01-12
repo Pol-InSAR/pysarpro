@@ -8,7 +8,7 @@ Welcome! `pysarpro`_ is a SAR processing toolbox which builds on
 SAR processing routines in `Python`_. Our project and community is guided by
 the :doc:`about/code_of_conduct`.
 
-.. _pysarpro: https://pysarpro.org
+.. _pysarpro: https://pol-insar.github.io
 .. _numpy: https://numpy.org
 .. _scipy.ndimage: https://docs.scipy.org/doc/scipy/reference/ndimage.html
 .. _Python: https://www.python.org

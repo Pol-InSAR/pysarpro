@@ -5,7 +5,7 @@ Getting help on using pysarpro
 API Reference
 -------------
 
-Keep the `reference guide <https://pysarpro.org/docs/stable/>`__
+Keep the `reference guide <https://pol-insar.github.io/docs/stable/>`__
 handy while programming with pysarpro.
 Select the docs that match the version of pysarpro you are using.
 

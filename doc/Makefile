@@ -130,9 +130,8 @@ gh-pages:
 
 gitwash:
 	$(PYTHON) tools/gitwash/gitwash_dumper.py source pysarpro \
-	--project-url=https://pysarpro.org \
+	--project-url=https://pol-insar.github.io \
 	--project-ml-url=https://mail.python.org/mailman3/lists/pysarpro.python.org/ \
 	--repo-name=pysarpro \
 	--github-user=pysarpro \
 	--source-suffix=.rst
-
