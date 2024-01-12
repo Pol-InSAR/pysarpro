@@ -3,8 +3,6 @@ import pathlib
 import numpy as np
 
 from .._shared.utils import warn
-from ..color.colorconv import rgb2gray, rgba2rgb
-from ..exposure import is_low_contrast
 from ..io.manage_plugins import call_plugin
 from .util import file_or_url_context
 
@@ -64,11 +62,6 @@ def imread(fname, as_gray=False, plugin=None, **plugin_args):
         if img.shape[-1] not in (3, 4) and img.shape[-3] in (3, 4):
             img = np.swapaxes(img, -1, -3)
             img = np.swapaxes(img, -2, -3)
-
-        if as_gray:
-            if img.shape[2] == 4:
-                img = rgba2rgb(img)
-            img = rgb2gray(img)
 
     return img
 
@@ -146,8 +139,7 @@ def imsave(fname, arr, plugin=None, check_contrast=True, **plugin_args):
             stacklevel=2,
         )
         arr = arr.astype('uint8') * 255
-    if check_contrast and is_low_contrast(arr):
-        warn(f'{fname} is a low contrast image')
+
     return call_plugin('imsave', fname, arr, plugin=plugin, **plugin_args)
 
 

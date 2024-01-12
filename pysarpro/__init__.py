@@ -91,7 +91,7 @@ directory and you need to try from another location."""
 _STANDARD_MSG = """
 Your install of pysarpro appears to be broken.
 Try re-installing the package following the instructions at:
-https://pysarpro.org/docs/stable/user_guide/install.html"""
+https://pol-insar.github.io/docs/stable/user_guide/install.html"""
 
 
 def _raise_build_error(e):

@@ -51,7 +51,7 @@ def gaussian(
         dtype of input)
 
         For more information, see:
-        https://pysarpro.org/docs/dev/user_guide/data_types.html
+        https://pol-insar.github.io/docs/dev/user_guide/data_types.html
     truncate : float, optional
         Truncate the filter at this many standard deviations.
     channel_axis : int or None, optional

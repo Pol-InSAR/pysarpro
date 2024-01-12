@@ -13,12 +13,10 @@ legacy_datasets = [
 # To generate the SHA256 hash, use the command
 # openssl sha256 filename
 registry = {
-    "color/tests/data/lab_array_a_10.npy": "a3ef76f1530e374f9121020f1f220bc89767dc866f4bbd1b1f47e5b84891a38c",
+    "data/astronaut.png": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5",
 }
 
-registry_urls = {
-    "data/cells3d.tif": "https://gitlab.com/Pol-InSAR/data/-/raw/2cdc5ce89b334d28f06a58c9f0ca21aa6992a5ba/cells3d.tif"
-}
+registry_urls = {}
 
 legacy_registry = {
     ('data/' + filename): registry['data/' + filename] for filename in legacy_datasets

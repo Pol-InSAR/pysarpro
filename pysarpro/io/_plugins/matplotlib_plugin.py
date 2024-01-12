@@ -4,7 +4,6 @@ from math import ceil, floor
 import numpy as np
 
 from ..._shared.utils import warn
-from ...exposure import is_low_contrast
 from ...util import dtype as dtypes
 
 _default_colormap = 'gray'
@@ -52,7 +51,7 @@ def _get_image_properties(image):
     out_of_range_float = np.issubdtype(image.dtype, np.floating) and (
         immin < lo or immax > hi
     )
-    low_data_range = immin != immax and is_low_contrast(image)
+    low_data_range = immin != immax
     unsupported_dtype = image.dtype not in dtypes._supported_types
 
     return ImageProperties(
