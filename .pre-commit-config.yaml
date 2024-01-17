@@ -1,13 +1,40 @@
+---
+minimum_pre_commit_version: "2.17"
+default_stages: [commit]
+
 # Install pre-commit hooks via
 # pre-commit install
 
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0 # v4.4.0
+  # ----------------------------------------------
+  # Meta hooks
+  # ----------------------------------------------
+
+  - repo: meta
     hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
+      - id: identity
+        stages: [commit, manual]
+      - id: check-hooks-apply
+        stages: [manual]
+      - id: check-useless-excludes
+        stages: [manual]
+
+  # ----------------------------------------------
+  # File hooks
+  # ----------------------------------------------
+
+  # file checking out-of-the-box hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: check-symlinks
       - id: debug-statements
+      - id: destroyed-symlinks
       - id: check-ast
       - id: mixed-line-ending
       - id: check-yaml
@@ -16,28 +43,210 @@ repos:
       - id: check-added-large-files
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.3 # v2.7.1
+    rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
         files: \.(md|rst|yml|yaml)
         args: [--prose-wrap=preserve]
 
+  # ####################################################################################
+  #
+  #       FORMATTING
+  #
+  # ####################################################################################
+
+  # ----------------------------------------------
+  # Python
+  # ----------------------------------------------
+
+  # ruff - python linter with fixing ability
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.4 # v0.0.261
+    rev: v0.1.13
     hooks:
       - id: ruff
-        args: [--fix, --show-fixes, --exit-non-zero-on-fix]
+        name: ruff (fix)
+        args:
+          [
+            "--fix-only",
+            "--show-fixes",
+            "--exit-non-zero-on-fix",
+            "--config=pyproject.toml",
+          ]
 
   - repo: https://github.com/MarcoGorelli/cython-lint
-    rev: v0.15.0 # v0.15.0
+    rev: v0.16.0
     hooks:
       - id: cython-lint
         args: [--no-pycodestyle, --max-line-length=88]
 
+  # black - python formatter
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 23.10.1
+    rev: 23.12.1
     hooks:
       - id: black
+        args: ["--safe"]
+
+  # blacken-docs - black for python code in docs (rst/md/tex)
+  - repo: https://github.com/asottile/blacken-docs
+    rev: 1.16.0
+    hooks:
+      - id: blacken-docs
+        additional_dependencies: [black==23.12.1]
+        exclude: ^(.github/|tests/test_cases/example_unicode.py)
+
+  # ----------------------------------------------
+  # JS / TS / HTML / CSS / MD / JSON / YAML
+  # ----------------------------------------------
+
+  # prettier - multi formatter
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+
+  # ----------------------------------------------
+  # Spelling dict
+  # ----------------------------------------------
+
+  # Custom hook as python command
+  - repo: local
+    hooks:
+      - id: sort-spelling-dicts
+        name: Sort spelling_dict.txt files
+        description: Sort spelling_dict.txt files
+        language: python
+        entry: python
+        args:
+          - "-c"
+          - |
+            import pathlib;
+            import sys;
+            p = pathlib.Path(sys.argv[1]);
+            content = p.read_text("utf-8").splitlines();
+            unique_lines = sorted(set(content));
+            final_text = "\n".join(unique_lines) + "\n";
+            p.write_text(final_text, "utf-8")
+        files: "spelling_dict.txt"
+
+  # ----------------------------------------------
+  # General (code unspecific)
+  # ----------------------------------------------
+
+  # code unspecific out-of-the-box hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: end-of-file-fixer
+        stages: [commit]
+      - id: trailing-whitespace
+        stages: [commit]
+
+  # ####################################################################################
+  #
+  #       LINTING
+  #
+  # ####################################################################################
+
+  # ----------------------------------------------
+  # General (code unspecific)
+  # ----------------------------------------------
+  # ruff - python linter with fixing ability
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.13
+    hooks:
+      - id: ruff
+        name: ruff (lint)
+        args: ["--config=pyproject.toml"]
+
+  # python specific out-of-the-box hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: debug-statements
+      - id: fix-encoding-pragma
+        args: ["--remove"]
+      - id: name-tests-test
+
+  # several python code regex hooks
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-check-blanket-noqa
+      - id: python-check-blanket-type-ignore
+      - id: python-check-mock-methods
+      - id: python-no-eval
+      - id: python-no-log-warn
+
+  # Lint hooks managed via tox envs b/c they need the pkg installed
+  - repo: local
+    hooks:
+      # mypy - python type checker
+      - id: mypy
+        name: mypy
+        description: run mypy over the installed package via tox
+        entry: tox
+        args: ["-e", "mypy"]
+        language: python
+        additional_dependencies: [tox]
+        types: [python]
+        pass_filenames: false
+        require_serial: true
+
+  # ----------------------------------------------
+  # Shell script
+  # ----------------------------------------------
+
+  # shellscript (via PyPI package)
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.9.0.6
+    hooks:
+      - id: shellcheck
+
+  # ----------------------------------------------
+  # reStructuredText
+  # ----------------------------------------------
+
+  # rstcheck - rst file checker
+  - repo: https://github.com/rstcheck/rstcheck
+    rev: v6.2.0
+    hooks:
+      - id: rstcheck
+        additional_dependencies: [sphinx, toml]
+        exclude: testing
+        args: ["--config", ".rstcheck.project.cfg"]
+
+  # ----------------------------------------------
+  # Markdown
+  # ----------------------------------------------
+
+  # markdownlint - md file checker
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.12.1
+    hooks:
+      - id: markdownlint-cli2
+
+  # ----------------------------------------------
+  # TOML / YAML
+  # ----------------------------------------------
+
+  # JSON specific out-of-the-box hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-toml
+      - id: check-yaml
+
+  # yamllint - yaml linter
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.33.0
+    hooks:
+      - id: yamllint
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        files: \.(py|sh|rst|yml|yaml)$
 
   - repo: local
     hooks:
@@ -45,7 +254,19 @@ repos:
         name: generate_requirements.py
         language: system
         entry: python tools/generate_requirements.py
-        files: "pyproject.toml|requirements/.*\\.txt|tools/generate_requirements.py"
+        files: |
+          "pyproject.toml|
+          requirements/.*\\.txt|
+          tools/generate_requirements.py"
+
+  # ----------------------------------------------
+  # Validate .pre-commit-hooks.yaml file
+  # ----------------------------------------------
+
+  - repo: https://github.com/pre-commit/pre-commit
+    rev: v3.6.0
+    hooks:
+      - id: validate_manifest
 
 ci:
   # This ensures that PR's aren't autofixed by the bot, rather you call
@@ -53,5 +274,9 @@ ci:
   autofix_prs: false
   autofix_commit_msg: |
     '[pre-commit.ci 🤖] Apply code format tools to PR'
-  # Update hook versions every month (so we don't get hit with weekly update PR's)
+  # Update hook versions every month
+  # (so we don't get hit with weekly update PR's)
+  # Default message is more verbose
+  autoupdate_commit_msg: "[pre-commit.ci] autoupdate"
+  # Default is weekly
   autoupdate_schedule: monthly

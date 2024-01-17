@@ -39,3 +39,4 @@ pysarpro/morphology/_skeletonize_3d_cy.pyx
 .asv
 .vscode/
 .mesonpy-native-file.ini
+**/sg_execution_times.rst

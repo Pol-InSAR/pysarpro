@@ -9,6 +9,8 @@ PYTHON_INTERPRETER = python
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
+CONDA_ACTIVATE=source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate
+MAMBA_ACTIVATE=source $$(mamba info --base)/etc/profile.d/mamba.sh ; mamba activate ; mamba activate
 
 
 ## Install Python Dependencies
@@ -17,7 +19,14 @@ requirements:
 	conda env update --name $(PROJECT_NAME) --file environment.yml --prune
 	
 
-
+## Install Python Dev Dependencies
+.PHONY: dev
+dev:
+	mamba create --yes --name $(PROJECT_NAME)-dev python=3.11 pre-commit 
+	$(CONDA_ACTIVATE) $(PROJECT_NAME)-dev
+	pip install -r requirements.txt
+	pip install -r requirements/build.txt
+	pip install -r requirements/docs.txt
 
 ## Delete all compiled Python files
 .PHONY: clean
