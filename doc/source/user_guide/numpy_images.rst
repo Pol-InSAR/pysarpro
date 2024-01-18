@@ -96,9 +96,6 @@ This can be used to define a region of interest, for example, a disk::
     ...                    (nrows / 2)**2)
     >>> camera[outer_disk_mask] = 0
 
-.. image:: ../auto_examples/numpy_operations/images/sphx_glr_plot_camera_numpy_001.png
-    :width: 45%
-    :target: ../auto_examples/numpy_operations/plot_camera_numpy.html
 
 Boolean operations from NumPy can be used to define even more complex masks::
 
@@ -133,14 +130,7 @@ This shows that ``cat`` is a 300-by-451 pixel image with three channels
 We can also use 2D boolean masks for 2D multichannel images, as we did with
 the grayscale image above:
 
-.. plot::
-   :caption: Using a 2D mask on a 2D color image
 
-   import pysarpro as sarpro
-   cat = sarpro.data.chelsea()
-   reddish = cat[:, :, 0] > 160
-   cat[reddish] = [0, 255, 0]
-   plt.imshow(cat)
 
 The example color images included in :mod:`pysarpro.data` have channels stored
 along the last axis, although other software may follow different conventions.

@@ -66,6 +66,15 @@ source_suffix = ".rst"
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
+exclude_patterns = [
+    "_build",
+    "templates",
+    "includes",
+    "themes",
+    "_test",
+    "sg_execution_times.rst",
+]
+
 exclude_trees = []
 default_role = "autolink"
 pygments_style = "sphinx"
@@ -146,9 +155,7 @@ html_css_files = ['theme_overrides.css']
 html_theme_options = {
     # Navigation bar
     "logo": {
-        "alt_text": (
-            "pysarpro's logo, showing a snake's head overlayed with green " "and orange"
-        ),
+        "alt_text": ("pysarpro's logo, showing a satellite"),
         "text": "pysarpro",
         "link": "https://pol-insar.github.io",
     },
@@ -170,7 +177,7 @@ html_theme_options = {
     "show_prev_next": False,
     "switcher": {
         "json_url": (
-            "https://pol-insar.github.io/docs/dev/_static/version_switcher.json"
+            "https://raw.githubusercontent.com/Pol-InSAR/pysarpro/main/doc/source/_static/version_switcher.json"
         ),
         "version_match": "dev" if "dev" in version else version,
     },

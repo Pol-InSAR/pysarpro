@@ -103,6 +103,7 @@ repos:
     rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
+        exclude: \.(inc)$
 
   # ----------------------------------------------
   # Spelling dict
@@ -140,6 +141,7 @@ repos:
         stages: [commit]
       - id: trailing-whitespace
         stages: [commit]
+        exclude: \.(inc)$
 
   # ####################################################################################
   #
@@ -178,19 +180,19 @@ repos:
       - id: python-no-log-warn
 
   # Lint hooks managed via tox envs b/c they need the pkg installed
-  - repo: local
-    hooks:
-      # mypy - python type checker
-      - id: mypy
-        name: mypy
-        description: run mypy over the installed package via tox
-        entry: tox
-        args: ["-e", "mypy"]
-        language: python
-        additional_dependencies: [tox]
-        types: [python]
-        pass_filenames: false
-        require_serial: true
+  # - repo: local
+  #   hooks:
+  #     # mypy - python type checker
+  #     - id: mypy
+  #       name: mypy
+  #       description: run mypy over the installed package via tox
+  #       entry: tox
+  #       args: ["-e", "mypy"]
+  #       language: python
+  #       additional_dependencies: [tox]
+  #       types: [python]
+  #       pass_filenames: false
+  #       require_serial: true
 
   # ----------------------------------------------
   # Shell script

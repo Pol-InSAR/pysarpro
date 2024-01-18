@@ -149,7 +149,7 @@ unaffected.
     >>> image = image[:, :, ::-1]
 
 Using an image from OpenCV with ``pysarpro``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If cv_image is an array of unsigned bytes, ``pysarpro`` will understand it by
 default. If you prefer working with floating point images, :func:`~.img_as_float`
@@ -159,7 +159,7 @@ can be used to convert the image::
     >>> image = sarproutil.img_as_float(any_opencv_image)
 
 Using an image from ``pysarpro`` with OpenCV
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The reverse can be achieved with :func:`~.img_as_ubyte`::
 

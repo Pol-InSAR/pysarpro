@@ -37,7 +37,8 @@ worked, run the following in a Python shell or Jupyter notebook:
 .. code-block:: python
 
   import pysarpro as sarpro
-  print(sarpro__version__)
+
+  print(sarpro.__version__)
 
 or, from the command line:
 
@@ -151,9 +152,9 @@ is installed and then run this command:
 
 .. code-block:: sh
 
-    python -c 'import pysarpro as sarpro; sarprodata.download_all()'
+    python -c 'import pysarpro as sarpro; sarpro.data.download_all()'
 
-or call ``sarprodata.download_all()`` in your favourite interactive Python environment
+or call ``sarpro.data.download_all()`` in your favourite interactive Python environment
 (IPython, Jupyter notebook, ...).
 
 

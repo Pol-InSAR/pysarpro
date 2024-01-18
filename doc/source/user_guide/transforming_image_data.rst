@@ -99,18 +99,6 @@ using an array of labels to encode the regions to be represented with the
 same color.
 
 
-.. image:: ../auto_examples/segmentation/images/sphx_glr_plot_join_segmentations_001.png
-   :target: ../auto_examples/segmentation/plot_join_segmentations.html
-   :align: center
-   :width: 80%
-
-
-
-.. topic:: Examples:
-
-  * :ref:`sphx_glr_auto_examples_color_exposure_plot_tinting_grayscale_images.py`
-  * :ref:`sphx_glr_auto_examples_segmentation_plot_join_segmentations.py`
-  * :ref:`sphx_glr_auto_examples_segmentation_plot_rag_mean_color.py`
 
 
 .. _exposure:
@@ -180,15 +168,4 @@ of the value range are equally represented in the image. As a result,
 details are enhanced in large regions with poor contrast. As a further
 refinement, histogram equalization can be performed in subregions of the
 image with :func:`equalize_adapthist`, in order to correct for exposure
-gradients across the image. See the example
-:ref:`sphx_glr_auto_examples_color_exposure_plot_equalize.py`.
-
-.. image:: ../auto_examples/color_exposure/images/sphx_glr_plot_equalize_001.png
-   :target: ../auto_examples/color_exposure/plot_equalize.html
-   :align: center
-   :width: 90%
-
-
-.. topic:: Examples:
-
-  * :ref:`sphx_glr_auto_examples_color_exposure_plot_equalize.py`
+gradients across the image.

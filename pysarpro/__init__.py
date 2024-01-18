@@ -9,34 +9,10 @@ following subpackages:
 
 Subpackages
 -----------
-color
-    Color space conversion.
 data
     Test images and example data.
-draw
-    Drawing primitives (lines, text, etc.) that operate on NumPy arrays.
-exposure
-    Image intensity adjustment, e.g., histogram equalization, etc.
-feature
-    Feature detection and extraction, e.g., texture analysis corners, etc.
-filters
-    Sharpening, edge finding, rank filters, thresholding, etc.
-graph
-    Graph-theoretic operations, e.g., shortest paths.
 io
     Reading, saving, and displaying images and video.
-measure
-    Measurement of image properties, e.g., region properties and contours.
-metrics
-    Metrics corresponding to images, e.g. distance metrics, similarity, etc.
-morphology
-    Morphological operations, e.g., opening or skeletonization.
-restoration
-    Restoration algorithms, e.g., deconvolution algorithms, denoising, etc.
-segmentation
-    Partitioning an image into multiple regions.
-transform
-    Geometric and other transforms, e.g., rotation or the Radon transform.
 util
     Generic utilities.
 
@@ -178,7 +154,7 @@ if 'dev' in __version__:
             )
             __version__ += f'+git{git_date}.{git_hash}'
 
-from pysarpro._shared.tester import PytestTester  # noqa
+from pysarpro._shared.tester import PytestTester  # noqa: F401,W203
 
 test = PytestTester(__name__)
 del PytestTester
