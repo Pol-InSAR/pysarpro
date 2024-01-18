@@ -264,7 +264,7 @@ a separate line.
 Discussion
 ----------
 
-- https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/pull/3585
+- https://github.com/Pol-InSAR/pysarpro/pull/3585
 
 
 References and Footnotes
@@ -272,21 +272,21 @@ References and Footnotes
 
 .. [1] This historical record is available by the normal git commands
    for retrieving older revisions, and can also be browsed on
-   `GitHub <https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/tree/main/doc/source/skips>`_.
+   `GitHub <https://github.com/Pol-InSAR/pysarpro/tree/main/doc/source/skips>`_.
 
 .. [2] The URL for viewing SKIPs on the web is
    https://pol-insar.github.io/docs/stable/skips/
 
-.. _repo: https://github.com/Pol-InSAR/Pol-InSAR/pysarpro
+.. _repo: https://github.com/Pol-InSAR/pysarpro
 
 .. _developer forum: https://discuss.scientific-python.org/c/contributor/pysarpro
 
-.. _issue tracker: https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/issues
+.. _issue tracker: https://github.com/Pol-InSAR/pysarpro/issues
 
 .. _pysarpro Steering Council:
    https://pol-insar.github.io/docs/stable/skips/1-governance.html
 
-.. _`GitHub pull request`: https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/pulls
+.. _`GitHub pull request`: https://github.com/Pol-InSAR/pysarpro/pulls
 
 .. _reStructuredText: https://docutils.sourceforge.io/rst.html
 

@@ -18,7 +18,7 @@ Get the local copy of the code
 
 From the command line::
 
-   git clone https://github.com/Pol-InSAR/Pol-InSAR/pysarpro.git
+   git clone https://github.com/Pol-InSAR/pysarpro.git
 
 You now have a copy of the code tree in the new ``pysarpro`` directory.
 

@@ -288,9 +288,9 @@ license [1]_, as in `Copyright`, below, with attribution encouraged with CC0+BY
 .. [4] https://docs.scipy.org/doc/scipy/release.1.0.0.html
 .. [5] https://github.com/scipy/scipy/pull/12862
 .. [6] https://semver.org/
-.. [7] https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/issues/5439
-.. [8] https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/milestones/1.0
-.. [9] https://github.com/Pol-InSAR/Pol-InSAR/meeting-notes/blob/main/2021/july-api-meetings.md
+.. [7] https://github.com/Pol-InSAR/pysarpro/issues/5439
+.. [8] https://github.com/Pol-InSAR/pysarpro/milestones/1.0
+.. [9] https://github.com/Pol-InSAR/meeting-notes/blob/main/2021/july-api-meetings.md
 .. [10] https://forum.image.sc/tag/pysarpro
 .. [11] https://discuss.scientific-python.org/c/contributor/pysarpro
 .. [12] https://mail.python.org/archives/list/pysarpro@python.org/thread/DSV6PEYVJ4RZRUWWV5SBNF7FFRERTSCF/

@@ -16,7 +16,7 @@ SKIP 1 — pysarpro governance and decision-making
 :Type: Process
 :Created: 2019-07-02
 :Resolved: 2019-09-25
-:Resolution: https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/pull/4182
+:Resolution: https://github.com/Pol-InSAR/pysarpro/pull/4182
 :pysarpro-Version: 0.16
 
 Abstract
@@ -47,10 +47,10 @@ project in concrete ways, such as:
 
 - proposing a change to the code via a GitHub pull request;
 - reporting issues on our
-  `GitHub issues page <https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/issues>`_;
+  `GitHub issues page <https://github.com/Pol-InSAR/pysarpro/issues>`_;
 - proposing a change to the documentation,
-  `website <https://github.com/Pol-InSAR/Pol-InSAR/pysarpro-web>`_, or
-  `tutorials <https://github.com/Pol-InSAR/Pol-InSAR/pysarpro-tutorials>`_ via a
+  `website <https://github.com/Pol-InSAR/pysarpro-web>`_, or
+  `tutorials <https://github.com/Pol-InSAR/pysarpro-tutorials>`_ via a
   GitHub pull request;
 - discussing the design of the library, website, or tutorials on the
   `developer forum <https://discuss.scientific-python.org/c/contributor/pysarpro>`_,
@@ -58,7 +58,7 @@ project in concrete ways, such as:
   `project chat room <https://pysarpro.zulipchat.com/>`_, or in existing issues and pull
   requests; or
 - reviewing
-  `open pull requests <https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/pulls>`_,
+  `open pull requests <https://github.com/Pol-InSAR/pysarpro/pulls>`_,
 
 among other possibilities. Any community member can become a contributor, and
 all are encouraged to do so. By contributing to the project, community members
@@ -121,7 +121,7 @@ Decisions about the future of the project are made through discussion with all
 members of the community. All non-sensitive project management discussion takes
 place on the project
 `developer forum <https://discuss.scientific-python.org/c/contributor/pysarpro>`_
-and the `issue tracker <https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/issues>`_.
+and the `issue tracker <https://github.com/Pol-InSAR/pysarpro/issues>`_.
 Occasionally, sensitive discussion may occur on a private list.
 
 Decisions should be made in accordance with the :doc:`mission, vision and

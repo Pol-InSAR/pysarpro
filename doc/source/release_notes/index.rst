@@ -4,7 +4,7 @@ Release notes
 This is the list of changes to pysarpro between each release. For full details, see
 the `commit logs`_.
 
-.. _commit logs: https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/commits/
+.. _commit logs: https://github.com/Pol-InSAR/pysarpro/commits/
 
 .. naturalsortedtoctree::
     :maxdepth: 1

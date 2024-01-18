@@ -164,9 +164,9 @@ References
 .. [3] https://docs.scipy.org/doc/numpy/docs/howto_document.html
 .. [4] https://forum.image.sc/t/request-for-comment-road-to-pysarpro-1-0/20099/4
 .. [5] https://www.python.org/dev/peps/pep-0020/
-.. [6] https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/issues/3263
+.. [6] https://github.com/Pol-InSAR/pysarpro/issues/3263
 .. [7] https://forum.image.sc/t/request-for-comment-road-to-pysarpro-1-0/20099
-.. [8] https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/pull/3585
+.. [8] https://github.com/Pol-InSAR/pysarpro/pull/3585
 .. [9] https://forum.image.sc/t/request-for-comment-road-to-pysarpro-1-0/20099/3
 .. [10] CC0 1.0 Universal (CC0 1.0) Public Domain Dedication,
    https://creativecommons.org/publicdomain/zero/1.0/

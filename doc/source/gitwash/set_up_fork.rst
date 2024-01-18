@@ -13,7 +13,7 @@ Overview
 
    git clone git@github.com:your-user-name/pysarpro.git
    cd pysarpro
-   git remote add upstream https://github.com/Pol-InSAR/Pol-InSAR/pysarpro.git
+   git remote add upstream https://github.com/Pol-InSAR/pysarpro.git
 
 In detail
 =========
@@ -46,7 +46,7 @@ Linking your repository to the upstream repo
 ::
 
    cd pysarpro
-   git remote add upstream https://github.com/Pol-InSAR/Pol-InSAR/pysarpro.git
+   git remote add upstream https://github.com/Pol-InSAR/pysarpro.git
 
 ``upstream`` here is just the arbitrary name we're using to refer to the
 main `pysarpro`_ repository at `pysarpro github`_.
@@ -59,8 +59,8 @@ use it to merge into our own code.
 Just for your own satisfaction, show yourself that you now have a new
 'remote', with ``git remote -v show``, giving you something like::
 
-   upstream	https://github.com/Pol-InSAR/Pol-InSAR/pysarpro.git (fetch)
-   upstream	https://github.com/Pol-InSAR/Pol-InSAR/pysarpro.git (push)
+   upstream	https://github.com/Pol-InSAR/pysarpro.git (fetch)
+   upstream	https://github.com/Pol-InSAR/pysarpro.git (push)
    origin	git@github.com:your-user-name/pysarpro.git (fetch)
    origin	git@github.com:your-user-name/pysarpro.git (push)
 

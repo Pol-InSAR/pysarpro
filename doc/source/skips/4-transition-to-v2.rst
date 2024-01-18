@@ -291,7 +291,7 @@ license [1]_, as in `Copyright`, below, with attribution encouraged with CC0+BY
 .. [4] https://docs.scipy.org/doc/scipy/reference/release.1.0.0.html
 .. [5] https://github.com/scipy/scipy/pull/12862
 .. [6] https://semver.org/
-.. [7] https://github.com/Pol-InSAR/Pol-InSAR/pysarpro/issues/5439
+.. [7] https://github.com/Pol-InSAR/pysarpro/issues/5439
 
 Copyright
 ---------
