@@ -39,7 +39,7 @@ def test_stack_non_array():
 
 def test_imread_file_url():
     # tweak data path so that file URI works on both unix and windows.
-    data_path = str(fetch('data/camera.png'))
+    data_path = str(fetch('data/astronaut.png'))
     data_path = data_path.replace(os.path.sep, '/')
     image_url = f'file:///{data_path}'
     image = io.imread(image_url)
@@ -92,7 +92,7 @@ def _named_tempfile_func(error_class):
     from the Python standard library could raise. As of this writing, these
     are ``FileNotFoundError``, ``FileExistsError``, ``PermissionError``, and
     ``BaseException``. See
-    `this comment <https://github.com/Pol-InSAR/pysarpro/issues/3785#issuecomment-486598307>`__  # noqa
+    `this comment <https://github.com/Pol-InSAR/pysarpro/issues/3785#issuecomment-486598307>`__  #noqa
     for more information.
     """
 
@@ -106,11 +106,11 @@ def _named_tempfile_func(error_class):
     'error_class', [FileNotFoundError, FileExistsError, PermissionError, BaseException]
 )
 def test_failed_temporary_file(monkeypatch, error_class):
-    fetch('data/camera.png')
+    fetch('data/astronaut.png')
     # tweak data path so that file URI works on both unix and windows.
     data_path = data_dir.lstrip(os.path.sep)
     data_path = data_path.replace(os.path.sep, '/')
-    image_url = f'file:///{data_path}/camera.png'
+    image_url = f'file:///{data_path}/astronaut.png'
     with monkeypatch.context():
         monkeypatch.setattr(
             tempfile, 'NamedTemporaryFile', _named_tempfile_func(error_class)

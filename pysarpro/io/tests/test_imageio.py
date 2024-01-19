@@ -2,6 +2,7 @@ from tempfile import NamedTemporaryFile
 
 import numpy as np
 import pytest
+
 from pysarpro._shared import testing
 from pysarpro._shared.testing import fetch
 from pysarpro.io import imread, imsave, plugin_order
@@ -20,7 +21,7 @@ def test_imageio_as_gray():
     img = imread(fetch('data/color.png'), as_gray=True)
     assert img.ndim == 2
     assert img.dtype == np.float64
-    img = imread(fetch('data/camera.png'), as_gray=True)
+    img = imread(fetch('data/astronaut.png'), as_gray=True)
     # check that conversion does not happen for a gray image
     assert np.core.numerictypes.sctype2char(img.dtype) in np.typecodes['AllInteger']
 

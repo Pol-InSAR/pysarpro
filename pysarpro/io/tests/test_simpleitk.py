@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from pysarpro._shared import testing
 from pysarpro.io import imread, imsave, plugin_order, reset_plugins, use_plugin
 
@@ -25,7 +26,7 @@ def test_imread_as_gray():
     img = imread(testing.fetch('data/color.png'), as_gray=True)
     assert img.ndim == 2
     assert img.dtype == np.float64
-    img = imread(testing.fetch('data/camera.png'), as_gray=True)
+    img = imread(testing.fetch('data/astronaut.png'), as_gray=True)
     # check that conversion does not happen for a gray image
     assert np.core.numerictypes.sctype2char(img.dtype) in np.typecodes['AllInteger']
 

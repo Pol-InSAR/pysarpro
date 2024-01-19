@@ -1,18 +1,19 @@
 import numpy as np
+
 from pysarpro._shared import testing
 from pysarpro._shared.testing import assert_allclose, assert_array_equal
-from pysarpro.data import camera
+from pysarpro.data import astronaut
 from pysarpro.util import img_as_float, random_noise
 
 
 def test_set_seed():
-    cam = camera()
+    cam = astronaut()
     test = random_noise(cam, rng=42)
     assert_array_equal(test, random_noise(cam, rng=42))
 
 
 def test_salt():
-    cam = img_as_float(camera())
+    cam = img_as_float(astronaut())
     amount = 0.15
     cam_noisy = random_noise(cam, rng=42, mode='salt', amount=amount)
     saltmask = cam != cam_noisy
@@ -41,7 +42,7 @@ def test_singleton_dim():
 
 
 def test_pepper():
-    cam = img_as_float(camera())
+    cam = img_as_float(astronaut())
     data_signed = cam * 2.0 - 1.0  # Same image, on range [-1, 1]
 
     amount = 0.15
@@ -67,7 +68,7 @@ def test_pepper():
 
 
 def test_salt_and_pepper():
-    cam = img_as_float(camera())
+    cam = img_as_float(astronaut())
     amount = 0.15
     cam_noisy = random_noise(
         cam, rng=42, mode='s&p', amount=amount, salt_vs_pepper=0.25
@@ -139,7 +140,7 @@ def test_speckle():
 
 
 def test_poisson():
-    data = camera()  # 512x512 grayscale uint8
+    data = astronaut()  # 512x512 grayscale uint8
     rng = np.random.default_rng(42)
 
     cam_noisy = random_noise(data, mode='poisson', rng=42)
@@ -151,7 +152,7 @@ def test_poisson():
 
 
 def test_clip_poisson():
-    data = camera()  # 512x512 grayscale uint8
+    data = astronaut()  # 512x512 grayscale uint8
     data_signed = img_as_float(data) * 2.0 - 1.0  # Same image, on range [-1, 1]
 
     # Signed and unsigned, clipped
@@ -168,7 +169,7 @@ def test_clip_poisson():
 
 
 def test_clip_gaussian():
-    data = camera()  # 512x512 grayscale uint8
+    data = astronaut()  # 512x512 grayscale uint8
     data_signed = img_as_float(data) * 2.0 - 1.0  # Same image, on range [-1, 1]
 
     # Signed and unsigned, clipped
@@ -185,7 +186,7 @@ def test_clip_gaussian():
 
 
 def test_clip_speckle():
-    data = camera()  # 512x512 grayscale uint8
+    data = astronaut()  # 512x512 grayscale uint8
     data_signed = img_as_float(data) * 2.0 - 1.0  # Same image, on range [-1, 1]
 
     # Signed and unsigned, clipped

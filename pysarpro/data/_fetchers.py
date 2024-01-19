@@ -135,7 +135,7 @@ def _skip_pytest_case_requiring_pooch(data_filename):
     # want to run it online with pooch as a dependency.
     # As such, we will avoid failing the test, and silently skipping it.
     if 'PYTEST_CURRENT_TEST' in os.environ:
-        # https://docs.pytest.org/en/latest/example/simple.html#pytest-current-test-environment-variable  # noqa
+        # https://docs.pytest.org/en/latest/example/simple.html#pytest-current-test-environment-variable  #noqa
         import pytest
 
         # Pytest skip raises an exception that allows the
@@ -329,31 +329,6 @@ def _load(f, as_gray=False):
     from ..io import imread
 
     return imread(_fetch(f), as_gray=as_gray)
-
-
-def camera():
-    """Gray-level "camera" image.
-
-    Can be used for segmentation and denoising examples.
-
-    Returns
-    -------
-    camera : (512, 512) uint8 ndarray
-        Camera image.
-
-    Notes
-    -----
-    No copyright restrictions. CC0 by the photographer (Lav Varshney).
-
-    .. versionchanged:: 0.18
-        This image was replaced due to copyright restrictions. For more
-        information, please see [1]_.
-
-    References
-    ----------
-    .. [1] https://github.com/Pol-InSAR/pysarpro/issues/3927
-    """
-    return _load("data/camera.png")
 
 
 def astronaut():
