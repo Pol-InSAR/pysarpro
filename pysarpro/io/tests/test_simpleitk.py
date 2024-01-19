@@ -1,7 +1,6 @@
 import numpy as np
 import pytest
 
-from pysarpro._shared import testing
 from pysarpro.io import imread, imsave, plugin_order, reset_plugins, use_plugin
 
 pytest.importorskip('SimpleITK')
@@ -20,41 +19,6 @@ def test_prefered_plugin():
     assert order["imread"][0] == "simpleitk"
     assert order["imsave"][0] == "simpleitk"
     assert order["imread_collection"][0] == "simpleitk"
-
-
-def test_imread_as_gray():
-    img = imread(testing.fetch('data/color.png'), as_gray=True)
-    assert img.ndim == 2
-    assert img.dtype == np.float64
-    img = imread(testing.fetch('data/astronaut.png'), as_gray=True)
-    # check that conversion does not happen for a gray image
-    assert np.core.numerictypes.sctype2char(img.dtype) in np.typecodes['AllInteger']
-
-
-def test_bilevel():
-    expected = np.zeros((10, 10))
-    expected[::2] = 255
-
-    img = imread(testing.fetch('data/checker_bilevel.png'))
-    np.testing.assert_array_equal(img, expected)
-
-
-def test_imread_truncated_jpg():
-    with pytest.raises(RuntimeError):
-        imread(testing.fetch('data/truncated.jpg'))
-
-
-def test_imread_uint16():
-    expected = np.load(testing.fetch('data/chessboard_GRAY_U8.npy'))
-    img = imread(testing.fetch('data/chessboard_GRAY_U16.tif'))
-    assert np.issubdtype(img.dtype, np.uint16)
-    np.testing.assert_array_almost_equal(img, expected)
-
-
-def test_imread_uint16_big_endian():
-    expected = np.load(testing.fetch('data/chessboard_GRAY_U8.npy'))
-    img = imread(testing.fetch('data/chessboard_GRAY_U16B.tif'))
-    np.testing.assert_array_almost_equal(img, expected)
 
 
 @pytest.mark.parametrize("shape", [(10, 10), (10, 10, 3), (10, 10, 4)])

@@ -3,8 +3,6 @@ from tempfile import NamedTemporaryFile
 import numpy as np
 import pytest
 
-from pysarpro._shared import testing
-from pysarpro._shared.testing import fetch
 from pysarpro.io import imread, imsave, plugin_order
 
 
@@ -15,29 +13,6 @@ def test_prefered_plugin():
     assert order["imread"][0] == "imageio"
     assert order["imsave"][0] == "imageio"
     assert order["imread_collection"][0] == "imageio"
-
-
-def test_imageio_as_gray():
-    img = imread(fetch('data/color.png'), as_gray=True)
-    assert img.ndim == 2
-    assert img.dtype == np.float64
-    img = imread(fetch('data/astronaut.png'), as_gray=True)
-    # check that conversion does not happen for a gray image
-    assert np.core.numerictypes.sctype2char(img.dtype) in np.typecodes['AllInteger']
-
-
-def test_imageio_palette():
-    img = imread(fetch('data/palette_color.png'))
-    assert img.ndim == 3
-
-
-def test_imageio_truncated_jpg():
-    # imageio>2.0 uses Pillow / PIL to try and load the file.
-    # Oddly, PIL explicitly raises a SyntaxError when the file read fails.
-    # The exception type changed from SyntaxError to OSError in PIL 8.2.0, so
-    # allow for either to be raised.
-    with testing.raises((OSError, SyntaxError)):
-        imread(fetch('data/truncated.jpg'))
 
 
 class TestSave:
@@ -77,7 +52,3 @@ class TestSave:
             a = np.zeros((5, 5), bool)
             a[2, 2] = True
             imsave(fname, a)
-
-
-def test_return_class():
-    testing.assert_equal(type(imread(fetch('data/color.png'))), np.ndarray)

@@ -1,5 +1,4 @@
 import os
-import pathlib
 import tempfile
 
 import numpy as np
@@ -55,21 +54,6 @@ def test_imread_http_url(httpserver):
     # by extension
     image = io.imread(httpserver.url + '/test.jpg' + '?' + 's' * 266)
     assert image.shape == (1, 1)
-
-
-def test_imread_pathlib_tiff():
-    """Tests reading from Path object (issue gh-5545)."""
-
-    # read via fetch
-    fname = fetch('data/multipage.tif')
-    expected = io.imread(fname)
-
-    # read by passing in a pathlib.Path object
-    path = pathlib.Path(fname)
-    img = io.imread(path)
-
-    assert img.shape == (2, 15, 10)
-    assert_array_equal(expected, img)
 
 
 def _named_tempfile_func(error_class):

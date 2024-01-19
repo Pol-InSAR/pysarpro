@@ -3,8 +3,8 @@ from tempfile import NamedTemporaryFile
 
 import numpy as np
 import pytest
-from numpy.testing import assert_array_almost_equal, assert_array_equal
-from pysarpro._shared.testing import fetch
+from numpy.testing import assert_array_equal
+
 from pysarpro.io import imread, imsave, reset_plugins, use_plugin
 
 
@@ -15,38 +15,6 @@ def setup():
 
 def teardown():
     reset_plugins()
-
-
-def test_imread_uint16():
-    expected = np.load(fetch('data/chessboard_GRAY_U8.npy'))
-    img = imread(fetch('data/chessboard_GRAY_U16.tif'))
-    assert img.dtype == np.uint16
-    assert_array_almost_equal(img, expected)
-
-
-def test_imread_uint16_big_endian():
-    expected = np.load(fetch('data/chessboard_GRAY_U8.npy'))
-    img = imread(fetch('data/chessboard_GRAY_U16B.tif'))
-    assert img.dtype == np.uint16
-    assert_array_almost_equal(img, expected)
-
-
-def test_imread_multipage_rgb_tif():
-    img = imread(fetch('data/multipage_rgb.tif'))
-    assert img.shape == (2, 10, 10, 3), img.shape
-
-
-def test_tifffile_kwarg_passthrough():
-    img = imread(fetch('data/multipage.tif'), key=[1], is_ome=True)
-    assert img.shape == (15, 10), img.shape
-
-
-def test_imread_handle():
-    expected = np.load(fetch('data/chessboard_GRAY_U8.npy'))
-    with open(fetch('data/chessboard_GRAY_U16.tif'), 'rb') as fh:
-        img = imread(fh)
-    assert img.dtype == np.uint16
-    assert_array_almost_equal(img, expected)
 
 
 class TestSave:

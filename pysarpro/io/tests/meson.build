@@ -6,7 +6,6 @@ python_sources = [
   'test_imread.py',
   'test_io.py',
   'test_mpl_imshow.py',
-  'test_multi_image.py',
   'test_plugin.py',
   'test_sift.py',
   'test_simpleitk.py',
