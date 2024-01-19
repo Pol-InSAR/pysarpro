@@ -32,10 +32,12 @@ fi
 python -m pip install --upgrade pip
 
 # Install build time requirements
-python -m pip install "$PIP_FLAGS" -r requirements/build.txt
+# shellcheck disable=SC2116,SC2086
+python -m pip install ${PIP_FLAGS} -r requirements/build.txt
 # Default requirements are necessary to build because of lazy importing
 # They can be moved after the build step if #3158 is accepted
-python -m pip install "$PIP_FLAGS" -r requirements/default.txt
+# shellcheck disable=SC2116,SC2086
+python -m pip install ${PIP_FLAGS} -r requirements/default.txt
 
 # Show what's installed
 python -m pip list

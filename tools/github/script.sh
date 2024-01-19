@@ -2,7 +2,8 @@
 # Fail on non-zero exit and echo the commands
 set -evx
 
-python -m pip install "$PIP_FLAGS" -r requirements/test.txt
+# shellcheck disable=SC2116,SC2086
+python -m pip install ${PIP_FLAGS} -r requirements/test.txt
 MPL_DIR=$(python -c 'import matplotlib; print(matplotlib.get_configdir())')
 export MPL_DIR
 mkdir -p "$MPL_DIR"
@@ -15,7 +16,8 @@ if [[ ${WITHOUT_POOCH} == "1" ]]; then
   python -m pip uninstall pooch -y
 fi
 if [[ "${OPTIONAL_DEPS}" == "1" ]]; then
-    python -m pip install "$PIP_FLAGS" -r ./requirements/optional.txt
+    # shellcheck disable=SC2116,SC2086
+    python -m pip install ${PIP_FLAGS} -r ./requirements/optional.txt
 fi
 
 python -m pip list
@@ -25,7 +27,8 @@ python -m pip list
 
 if [[ "${BUILD_DOCS}" == "1" ]] || [[ "${TEST_EXAMPLES}" == "1" ]]; then
   echo Build or run examples
-  python -m pip install "$PIP_FLAGS" -r ./requirements/docs.txt
+  # shellcheck disable=SC2116,SC2086
+  python -m pip install ${PIP_FLAGS} -r ./requirements/docs.txt
   python -m pip list
   echo 'backend : Template' > "$MPL_DIR"/matplotlibrc
 fi
