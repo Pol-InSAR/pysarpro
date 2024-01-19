@@ -85,7 +85,7 @@ jobs:
           set -ex
           if [[ $INSTALL_FROM_SDIST == "1" ]]; then
               python -m build --no-isolation --skip-dependency-check --sdist .
-              pip install dist/scikit_image-*.tar.gz
+              pip install dist/pysarpro-*.tar.gz
           else
               pip install -vv --no-build-isolation .;
           fi
@@ -102,7 +102,8 @@ jobs:
           OPTIONAL_DEPS: ${{ matrix.OPTIONAL_DEPS }}
           INSTALL_FROM_SDIST: ${{ matrix.INSTALL_FROM_SDIST }}
           EAGER_IMPORT: ${{ matrix.EAGER_IMPORT }}
-          pysarpro_TEST_STRICT_WARNINGS_GLOBAL: ${{ matrix.pysarpro_TEST_STRICT_WARNINGS_GLOBAL }}
+          pysarpro_TEST_STRICT_WARNINGS_GLOBAL: |
+            ${{ matrix.pysarpro_TEST_STRICT_WARNINGS_GLOBAL }}
           WITHOUT_POOCH: ${{ matrix.WITHOUT_POOCH }}
         run: |
           source tools/github/script.sh
@@ -128,9 +129,11 @@ jobs:
       CC: /usr/bin/clang
       CXX: /usr/bin/clang++
       CPPFLAGS: "-Xpreprocessor -fopenmp"
-      CFLAGS: "-Wno-implicit-function-declaration -I/usr/local/opt/libomp/include"
+      CFLAGS: |
+        "-Wno-implicit-function-declaration -I/usr/local/opt/libomp/include"
       CXXFLAGS: "-I/usr/local/opt/libomp/include"
-      LDFLAGS: "-Wl,-rpath,/usr/local/opt/libomp/lib -L/usr/local/opt/libomp/lib -lomp"
+      LDFLAGS: |
+        "-Wl,-rpath,/usr/local/opt/libomp/lib -L/usr/local/opt/libomp/lib -lomp"
 
     steps:
       - name: Checkout pysarpro
