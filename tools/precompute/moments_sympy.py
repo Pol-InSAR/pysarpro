@@ -1,10 +1,9 @@
 """
 This script uses SymPy to generate the analytical equations used to transform
-raw moments into central moments in ``skimage/measure/_moments_analytical.py``
+raw moments into central moments in ``pysarpro/measure/_moments_analytical.py``
 """
 
-from sympy import symbols, binomial, Sum
-from sympy import IndexedBase, Idx
+from sympy import Idx, IndexedBase, Sum, binomial, symbols
 from sympy.printing.pycode import pycode
 
 # from sympy import init_printing, pprint

@@ -7,9 +7,6 @@ from contextlib import contextmanager
 
 import numpy as np
 
-from skimage.measure import marching_cubes_classic, marching_cubes_lewiner
-from skimage.draw import ellipsoid
-
 
 def main(select=3, **kwargs):
     """Script main function.
@@ -37,34 +34,25 @@ def main(select=3, **kwargs):
         # Uncommenting the line below will yield different results for
         # classic MC
         # vol *= -1
-    elif select == 4:
-        vol = ellipsoid(4, 3, 2, levelset=True)
-        isovalue = kwargs.pop('level', 0.0)
+    # elif select == 4:
+    #     vol = ellipsoid(4, 3, 2, levelset=True)
+    #     isovalue = kwargs.pop('level', 0.0)
     else:
         raise ValueError('invalid selection')
 
     # Get surface meshes
-    with timer('finding surface lewiner'):
-        vertices1, faces1 = marching_cubes_lewiner(vol, isovalue, **kwargs)[:2]
+    # with timer('finding surface lewiner'):
+    #     vertices1, faces1 = marching_cubes_lewiner(vol, isovalue, **kwargs)[:2]
 
-    with timer('finding surface classic'):
-        vertices2, faces2 = marching_cubes_classic(vol, isovalue, **kwargs)
+    # with timer('finding surface classic'):
+    #     vertices2, faces2 = marching_cubes_classic(vol, isovalue, **kwargs)
 
     # Show
     vv.figure(1)
     vv.clf()
-    a1 = vv.subplot(121)
-    vv.title('Lewiner')
-    m1 = vv.mesh(np.fliplr(vertices1), faces1)
-    a2 = vv.subplot(122)
-    vv.title('Classic')
-    m2 = vv.mesh(np.fliplr(vertices2), faces2)
-    a1.camera = a2.camera
-
-    # visvis uses right-hand rule, gradient_direction param uses left-hand rule
-    m1.cullFaces = m2.cullFaces = 'front'  # None, front or back
 
     vv.use().Run()
+    return vol, isovalue
 
 
 def donuts():
