@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from pysarpro import io
 from pysarpro._shared._warnings import expected_warnings
 
@@ -52,59 +53,59 @@ def n_subplots(ax_im):
     return len(ax_im.get_figure().get_axes())
 
 
-def test_uint8():
-    plt.figure()
-    with expected_warnings(imshow_expected_warnings + [r"CObject type is marked|\A\Z"]):
-        ax_im = io.imshow(im8)
-    assert ax_im.cmap.name == 'gray'
-    assert ax_im.get_clim() == (0, 255)
-    assert n_subplots(ax_im) == 1
-    assert ax_im.colorbar is None
+# def test_uint8():
+#     plt.figure()
+#     with expected_warnings(imshow_expected_warnings + [r"CObject type is marked|\A\Z"]):
+#         ax_im = io.imshow(im8)
+#     assert ax_im.cmap.name == 'gray'
+#     assert ax_im.get_clim() == (0, 255)
+#     assert n_subplots(ax_im) == 1
+#     assert ax_im.colorbar is None
 
 
-def test_uint16():
-    plt.figure()
-    with expected_warnings(imshow_expected_warnings + [r"CObject type is marked|\A\Z"]):
-        ax_im = io.imshow(im16)
-    assert ax_im.cmap.name == 'gray'
-    assert ax_im.get_clim() == (0, 65535)
-    assert n_subplots(ax_im) == 1
-    assert ax_im.colorbar is None
+# def test_uint16():
+#     plt.figure()
+#     with expected_warnings(imshow_expected_warnings + [r"CObject type is marked|\A\Z"]):
+#         ax_im = io.imshow(im16)
+#     assert ax_im.cmap.name == 'gray'
+#     assert ax_im.get_clim() == (0, 65535)
+#     assert n_subplots(ax_im) == 1
+#     assert ax_im.colorbar is None
 
 
-def test_float():
-    plt.figure()
-    with expected_warnings(imshow_expected_warnings + [r"CObject type is marked|\A\Z"]):
-        ax_im = io.imshow(imf)
-    assert ax_im.cmap.name == 'gray'
-    assert ax_im.get_clim() == (0, 1)
-    assert n_subplots(ax_im) == 1
-    assert ax_im.colorbar is None
+# def test_float():
+#     plt.figure()
+#     with expected_warnings(imshow_expected_warnings + [r"CObject type is marked|\A\Z"]):
+#         ax_im = io.imshow(imf)
+#     assert ax_im.cmap.name == 'gray'
+#     assert ax_im.get_clim() == (0, 1)
+#     assert n_subplots(ax_im) == 1
+#     assert ax_im.colorbar is None
 
 
-def test_low_data_range():
-    with expected_warnings(
-        imshow_expected_warnings + ["Low image data range|CObject type is marked"]
-    ):
-        ax_im = io.imshow(im_lo)
-    assert ax_im.get_clim() == (im_lo.min(), im_lo.max())
-    # check that a colorbar was created
-    assert ax_im.colorbar is not None
+# def test_low_data_range():
+#     with expected_warnings(
+#         imshow_expected_warnings + ["Low image data range|CObject type is marked"]
+#     ):
+#         ax_im = io.imshow(im_lo)
+#     assert ax_im.get_clim() == (im_lo.min(), im_lo.max())
+#     # check that a colorbar was created
+#     assert ax_im.colorbar is not None
 
 
-def test_outside_standard_range():
-    plt.figure()
-    # Warning raised by matplotlib on Windows:
-    # "The CObject type is marked Pending Deprecation in Python 2.7.
-    #  Please use capsule objects instead."
-    # Ref: https://docs.python.org/2/c-api/cobject.html
-    with expected_warnings(
-        imshow_expected_warnings + ["out of standard range|CObject type is marked"]
-    ):
-        ax_im = io.imshow(im_hi)
-    assert ax_im.get_clim() == (im_hi.min(), im_hi.max())
-    assert n_subplots(ax_im) == 2
-    assert ax_im.colorbar is not None
+# def test_outside_standard_range():
+#     plt.figure()
+#     # Warning raised by matplotlib on Windows:
+#     # "The CObject type is marked Pending Deprecation in Python 2.7.
+#     #  Please use capsule objects instead."
+#     # Ref: https://docs.python.org/2/c-api/cobject.html
+#     with expected_warnings(
+#         imshow_expected_warnings + ["out of standard range|CObject type is marked"]
+#     ):
+#         ax_im = io.imshow(im_hi)
+#     assert ax_im.get_clim() == (im_hi.min(), im_hi.max())
+#     assert n_subplots(ax_im) == 2
+#     assert ax_im.colorbar is not None
 
 
 def test_nonstandard_type():

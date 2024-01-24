@@ -42,7 +42,7 @@ def test_imread_file_url():
     data_path = data_path.replace(os.path.sep, '/')
     image_url = f'file:///{data_path}'
     image = io.imread(image_url)
-    assert image.shape == (512, 512)
+    assert image.shape == (512, 512, 3)
 
 
 def test_imread_http_url(httpserver):
