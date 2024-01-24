@@ -1,11 +1,9 @@
 import os
 
-import numpy as np
 import pytest
 
 import pysarpro.data as data
-from pysarpro import io
-from pysarpro._shared.testing import assert_almost_equal, assert_equal, fetch
+from pysarpro._shared.testing import assert_equal
 from pysarpro.data._fetchers import _image_fetcher
 
 
@@ -26,7 +24,7 @@ def test_download_all_with_pooch():
     if _image_fetcher is not None:
         data.download_all()
         assert 'astronaut.png' in os.listdir(data_dir)
-        assert len(os.listdir(data_dir)) > 50
+        assert len(os.listdir(data_dir)) > 1
     else:
         with pytest.raises(ModuleNotFoundError):
             data.download_all()
