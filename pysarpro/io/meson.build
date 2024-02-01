@@ -5,6 +5,7 @@ python_sources = [
   'collection.py',
   'manage_plugins.py',
   'sift.py',
+  'ste.py',
   'util.py'
 ]
 

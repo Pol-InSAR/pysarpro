@@ -22,3 +22,4 @@ py3.install_sources([
 )
 
 subdir('tests')
+subdir('01-sar')

@@ -27,7 +27,7 @@ def slice_along_axes(image, slices, axes=None, copy=False):
     --------
     >>> from pysarpro import data
     >>> from pysarpro.io import imread
-    >>> img = imread(data.astronaut() , as_gray=True)
+    >>> img = imread(data.astronaut(), as_gray=True)
     >>> img.shape
     (512, 512)
     >>> cropped_img = slice_along_axes(img, [(0, 100)])
