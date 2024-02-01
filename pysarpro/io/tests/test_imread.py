@@ -1,14 +1,12 @@
 from tempfile import NamedTemporaryFile
 
 import numpy as np
+from pytest import importorskip
 
 from pysarpro._shared.testing import TestCase, assert_array_almost_equal
 from pysarpro.io import imread, imsave, reset_plugins, use_plugin
 
-# from pytest import importorskip
-
-
-# importorskip('imread')
+importorskip('imread')
 
 
 def setup():
