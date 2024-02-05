@@ -1,12 +1,6 @@
 """"
-Input-output Module
-===================
-
-The following module provides the possibility to work with ``RAT`` files, widely
+Provides the possibility to work with RAT files, widely
 used by DLR-HR institute and some others.
-
-:author: Andreas Reigber <andreas.reigber@dlr.de>
-:author: Anton Heister <anton.heister@dlr.de>
 
 """
 
