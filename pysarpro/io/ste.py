@@ -19,6 +19,13 @@ from functools import reduce
 
 import numpy as np
 
+__all__ = [
+    'rrat',
+    'mrrat',
+    'srat',
+    'RatFile',
+]
+
 try:
     import lxml.etree as ET
 except ImportError:
@@ -28,8 +35,12 @@ except ImportError:
     )
 
 try:
+    # import importlib_resources
+    from importlib import resources
+
     from mako.template import Template
-    from pkg_resources import resource_string
+
+    # from pkg_resources import resource_string
 except ImportError:
     warnings.warn(
         'Failed to import pkg_resources and/or mako. Writing geo-Envi-headers for RAT files will not work.',
@@ -41,24 +52,86 @@ endc = "\033[0m"
 
 
 def rrat(filename, **kwargs):
-    """Read an entire RAT file, return it as a numpy array."""
+    """Read an entire RAT file and return it as a numpy array.
+
+    Parameters
+    ----------
+    filename : str
+        The path to the RAT file to be read.
+    **kwargs : keyword arguments, optional
+        Additional options for reading the RAT file.
+
+    Returns
+    -------
+    numpy.ndarray
+        The contents of the RAT file as a numpy array.
+
+    Examples
+    --------
+    >>> data = rrat("example.rat")
+    >>> print(data)
+    array([[1, 2, 3],
+           [4, 5, 6],
+           [7, 8, 9]])
+
+    """
+
     rat_file = RatFile(filename)
     return rat_file.read(**kwargs)
 
 
 def mrrat(filename, **kwargs):
-    """Read an entire RAT file, return it as a memory map to the numpy array.
+    """Read an entire RAT file and return it as a memory-mapped numpy array.
 
-    Convenient for reading big files especially for blockwise processing. The
-     function works faster than rrat, but the disadvantage is that the array is
-     read-only.
+    Convenient for reading big files, especially for blockwise processing.
+    This function works faster than rrat, but the disadvantage is that the
+    array is read-only.
+
+    Parameters
+    ----------
+    filename : str
+        The path to the RAT file to be read.
+    **kwargs : keyword arguments, optional
+        Additional options for reading the RAT file.
+
+    Returns
+    -------
+    numpy.memmap
+        A memory-mapped view of the RAT file contents as a numpy array.
+
+    Examples
+    --------
+    >>> data = mrrat("example.rat")
+    >>> print(data)
+    memmap([[1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]])
+
     """
+
     rat_file = RatFile(filename)
     return rat_file.mread(**kwargs)
 
 
 def srat(filename, array, **kwargs):
-    """Write a numpy ndarray into a RAT file."""
+    """Write a numpy ndarray into a RAT file.
+
+    Parameters
+    ----------
+    filename : str
+        The path to the RAT file to be written.
+    array : numpy.ndarray
+        The numpy array to be written into the RAT file.
+    **kwargs : keyword arguments, optional
+        Additional options for writing the RAT file.
+
+    Examples
+    --------
+    >>> data = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    >>> srat("output.rat", data)
+
+    """
+
     rat_file = RatFile(filename)
     rat_file.write(array, **kwargs)
 
@@ -67,34 +140,37 @@ class RatHeaderRat(ctypes.Structure):
     """
     A base class to store RAT header's attributes.
 
-    The class is a child of ``ctypes.Structure``. This is made to write and read
+    The class is a child of `ctypes.Structure`. This is made to write and read
     RAT headers correctly and easily preserving the size of each field in bytes.
 
-    :param magiclong: used for RAT version control
-    :type magiclong: int
-    :param version: RAT version (currently 1.0 and 2.0 versions are available)
-    :type version: float
-    :param ndim: number of array's dimension
-    :type ndim: int
-    :param nchannel: number of channels
-    :type nchannel: int
-    :param shape: the shape of the data array
-    :type shape: list
-    :param var: specifies data type according to IDL's convention. More
-      information here <http://www.exelisvis.com/docs/IDL_Data_Types.html>
-    :type var: int
-    :param sub: to be implemented
-    :type sub: int
-    :param rattype: to be implemented
-    :type rattype: int
+    Parameters
+    ----------
+    magiclong : int
+        Used for RAT version control.
+    version : float
+        RAT version (currently 1.0 and 2.0 versions are available).
+    ndim : int
+        Number of array's dimension.
+    nchannel : int
+        Number of channels.
+    shape : list
+        The shape of the data array.
+    var : int
+        Specifies data type according to IDL's convention. More information
+        [here](http://www.exelisvis.com/docs/IDL_Data_Types.html).
+    sub : int
+        To be implemented.
+    rattype : int
+        To be implemented.
 
-    .. note:: Due to some degree of redundancy in RatHeader  (there are 3
-      connected attributes: ``shape``, ``ndim``, ``nchannel``), the priority in
-      determining the value of ``ndim`` and ``nchannel`` parameters is given to
-      ``shape`` parameter. That means that ``ndim`` is calculated as
-      ``len(shape)`` and ``nchannel`` can be given as ``**kwargs``, if not given
-      then it is equal either to ``product(shape[2::])``  if ``ndim > 2`` or to ``1`` if
-      ``ndim < 2``.
+    Notes
+    -----
+    Due to some degree of redundancy in RatHeader (there are 3 connected attributes:
+    `shape`, `ndim`, `nchannel`), the priority in determining the value of `ndim`
+    and `nchannel` parameters is given to `shape` parameter. That means that `ndim`
+    is calculated as `len(shape)` and `nchannel` can be given as `**kwargs`, if not
+    given then it is equal either to `product(shape[2::])` if `ndim > 2` or to `1` if
+    `ndim < 2`.
     """
 
     _pack_ = 1
@@ -111,39 +187,35 @@ class RatHeaderRat(ctypes.Structure):
     ]
 
     def __init__(self, **kwargs):
-        """Create an object of RatHeaderRat class.
+        """
+        Create an object of RatHeaderRat class.
 
-        Create RatHeaaderRat instance. Due to redundancy of ``RAT`` header
-        (there are 3 connected attributes: ``shape``, ``ndim``, ``nchannel``).
+        Create RatHeaaderRat instance. Due to redundancy of `RAT` header
+        (there are 3 connected attributes: `shape`, `ndim`, `nchannel`).
         Until the latter 2 are not specified explicitly, their value is
-        calculated based on ``shaped``.
+        calculated based on `shaped`.
 
-        To specify the data type of a ``RAT`` file one may use either ``dtype``
-        keyword with numpy data type or a string as a value, or a ``var``
+        To specify the data type of a `RAT` file one may use either `dtype`
+        keyword with numpy data type or a string as a value, or a `var`
         keyword according to IDL's regulations.
 
-        **Keywords**:
-          :param array: a numpy array which is used to define/override ``shape`` and ``dtype``.
-          :type shape: list
-          :param shape: a shape of a ``RAT`` file.
-          :type shape: list
-          :param ndim: number of dimensions, if not given, then parsed from
-            ``shape``
-          :type ndim: int
-          :param nchannel: number of channels, if not given, then parsed from
-            ``shape``.
-          :type nchannel: int
-          :param var: a data type according to IDL's regulation
-          :type var: int
-          :param dtype: a data type of a ``RAT`` file.
-          :type dtype: numpy.dtype or a string
-          :param dtype: a data type of a ``RAT`` file.
-          :type dtype: numpy.dtype or a string
-          :param sub: ...
-          :param sub: list
-          :param rattype: type of a ``RAT`` file
-          :type rattype: int
-
+        Parameters
+        ----------
+        array : numpy array
+            A numpy array which is used to define/override `shape` and `dtype`.
+        shape : list
+            A shape of a `RAT` file.
+        ndim : int
+            Number of dimensions, if not given, then parsed from `shape`.
+        nchannel : int
+            Number of channels, if not given, then parsed from `shape`.
+        var : int
+            A data type according to IDL's regulation.
+        dtype : numpy.dtype or a string
+            A data type of a `RAT` file.
+        sub : list
+        rattype : int
+            Type of a `RAT` file.
         """
 
         if 'array' in kwargs:
@@ -187,51 +259,63 @@ class RatHeaderRat(ctypes.Structure):
 
 
 class RatHeaderInfo(ctypes.Structure):
-    """Contains a 100 character line for RatFile description."""
+    """
+    Contains a 100-character line for RatFile description.
+
+    Attributes
+    ----------
+    info : numpy.ndarray
+        A 1-dimensional array of characters representing the RatFile description.
+    """
 
     _pack_ = 1
     _fields_ = [("info", ctypes.c_char * 100)]
 
 
 class RatHeaderGeo(ctypes.Structure):
-    """Contains positioning information.
+    """
+    Contains positioning information.
 
-    :param projection:
-    :type projection:
-    :param ps_east:
-    :type ps_east:
-    :param ps_north:
-    :type ps_north:
-    :param min_east:
-    :type min_east:
-    :param min_north:
-    :type min_north:
-    :param zone:
-    :type zone:
-    :param hemisphere:
-    :type hemisphere:
-    :param long0scl:
-    :type long0scl:
-    :param max_axis_ell:
-    :type max_axis_ell:
-    :param min_axis_ell:
-    :type min_axis_ell:
-    :param dshift_tx:
-    :type dshift_tx:
-    :param dshift_ty:
-    :type dshift_ty:
-    :param dshift_tz:
-    :type dshift_tz:
-    :param dshift_rx:
-    :type dshift_rx:
-    :param dshift_ry:
-    :type dshift_ry:
-    :param dshift_rz:
-    :type dshift_rz:
-    :param dshift_scl:
-    :type dshift_scl:
-    :param dshift_info:
-    :type dshift_info:
+    Attributes
+    ----------
+    projection : numpy.int16
+        Used for projection.
+    ps_east : numpy.float64
+        Easting of the polar stereographic projection.
+    ps_north : numpy.float64
+        Northing of the polar stereographic projection.
+    min_east : numpy.float64
+        Minimum easting.
+    min_north : numpy.float64
+        Minimum northing.
+    zone : numpy.int16
+        Zone information.
+    hemisphere : numpy.int16
+        Hemisphere information.
+    long0scl : numpy.float64
+        Longitude scaling.
+    max_axis_ell : numpy.float64
+        Maximum axis of the ellipsoid.
+    min_axis_ell : numpy.float64
+        Minimum axis of the ellipsoid.
+    dshift_tx : numpy.float64
+        Translation along the x-axis.
+    dshift_ty : numpy.float64
+        Translation along the y-axis.
+    dshift_tz : numpy.float64
+        Translation along the z-axis.
+    dshift_rx : numpy.float64
+        Rotation around the x-axis.
+    dshift_ry : numpy.float64
+        Rotation around the y-axis.
+    dshift_rz : numpy.float64
+        Rotation around the z-axis.
+    dshift_scl : numpy.float64
+        Scaling factor.
+    dshift_info : numpy.ndarray
+        Array of characters containing shift information.
+    reserved : numpy.int8[18]
+        Reserved bytes.
     """
 
     _pack_ = 1
@@ -259,12 +343,22 @@ class RatHeaderGeo(ctypes.Structure):
 
 
 class RatHeaderEmpty(ctypes.Structure):
+    """
+    Empty structure with reserved bytes.
+
+    Attributes
+    ----------
+    reserved : numpy.int32[25]
+        Reserved bytes.
+    """
+
     _pack_ = 1
     _fields_ = [("reserved", ctypes.c_int * 25)]
 
 
 class RatHeader(ctypes.Structure):
-    """Contains RatHeaderRat, RatHeaderInfo and RatHeaderGeo.
+    """
+    Contains RatHeaderRat, RatHeaderInfo, and RatHeaderGeo.
 
     Create RatHeaaderRat instance. Due to redundancy of ``RAT`` header
     (there are 3 connected attributes: ``shape``, ``ndim``, ``nchannel``).
@@ -275,24 +369,31 @@ class RatHeader(ctypes.Structure):
     keyword with numpy data type or a string as a value, or a ``var``
     keyword according to IDL's regulations.
 
-    **Keywords**:
-      :param shape: a shape of a ``RAT`` file.
-      :type shape: list
-      :param ndim: number of dimensions, if not given, then parsed from
-        ``shape``
-      :type ndim: int
-      :param nchannel: number of channels, if not given, then parsed from
-        ``shape``.
-      :type nchannel: int
-      :param var: a data type according to IDL's regulation
-      :type var: int
-      :param dtype: a data type of a ``RAT`` file.
-      :type dtype: numpy.dtype or a string
-      :param sub: ...
-      :param sub: list
-      :param rattype: type of a ``RAT`` file
-      :type rattype: int
+    Parameters
+    ----------
+    kwargs : dict
+        Keywords for initializing RatHeaderRat.
 
+    Attributes
+    ----------
+    Rat : RatHeaderRat
+        RatHeaderRat instance.
+    Info : RatHeaderInfo
+        RatHeaderInfo instance.
+    Geo : RatHeaderGeo
+        RatHeaderGeo instance.
+    Stat : RatHeaderEmpty
+        Reserved structure.
+    Reserved1 : RatHeaderEmpty
+        Reserved structure.
+    Reserved2 : RatHeaderEmpty
+        Reserved structure.
+    Reserved3 : RatHeaderEmpty
+        Reserved structure.
+    Reserved4 : RatHeaderEmpty
+        Reserved structure.
+    Reserved5 : RatHeaderEmpty
+        Reserved structure.
     """
 
     _pack_ = 1
@@ -313,21 +414,63 @@ class RatHeader(ctypes.Structure):
 
 
 class RatFile:
-    """Class for manipulating RAT formatted files."""
+    """
+    Class for manipulating RAT formatted files.
+
+    Parameters
+    ----------
+    filename : str
+        Either a RAT filename (with *.rat extension) if the file is in the
+        current working directory or an absolute path of the file.
+
+    Attributes
+    ----------
+    filename : str
+        The filename of the RAT file.
+    Header : RatHeader
+        The RAT file header.
+    shape : tuple
+        The shape of the numpy array.
+    dtype : numpy.dtype
+        The data type of the RAT file.
+    ndim : int
+        Number of dimensions.
+    info : str
+        Information about the RAT file.
+    var : int
+        Data type according to IDL's regulation.
+    nchannel : int
+        Number of channels.
+    exists : bool
+        Indicates whether the file exists.
+
+    Notes
+    -----
+    If the file doesn't exist, the function creates a new RatFile instance
+    with an empty header, not an empty file.
+    """
 
     def __init__(self, filename):
-        r"""Initialize a RAT file.
+        """
+        Initialize a RAT file.
 
-        If the file exists reads the file's header, if not then initializes
-        the empty ``RatFile`` **instance** with a given filename.
+        If the file exists, reads the file's header; if not, then initializes
+        the empty ``RatFile`` instance with a given filename.
 
-        :param filename: either a RAT filename (with \*.rat extension) if the
-          file is in current working directory or an absolute path of the file.
-        :type filename: string
-        :return: RatFile instance
+        Parameters
+        ----------
+        filename : str
+            Either a RAT filename (with *.rat extension) if the file is in the
+            current working directory or an absolute path of the file.
 
-        .. note:: If the file doesn't exist the function creates a new
-          ``RatFile`` instance with an empty header, not an empty file.
+        Returns
+        -------
+        RatFile instance
+
+        Notes
+        -----
+        If the file doesn't exist, the function creates a new ``RatFile``
+        instance with an empty header, not an empty file.
         """
         self.filename = filename
         self.Header = RatHeader()
@@ -348,11 +491,24 @@ class RatFile:
 
     @classmethod
     def _ioerror(cls, msg):
+        """
+        Print error message and raise OSError.
+
+        Parameters
+        ----------
+        msg : str
+            Error message.
+
+        Raises
+        ------
+        OSError
+        """
         print(red + msg + endc)
         raise OSError(msg)
 
     def create(self, shape=None, header=None, **kwargs):
-        r"""Create an empty ``RAT`` file and write a RAT header into it.
+        """
+        Create an empty ``RAT`` file and write a RAT header into it.
 
         Create an empty ``rat`` file with given parameters and write a RAT
         header. Either ``RatHeader`` instance or ``shape`` list should be
@@ -361,26 +517,37 @@ class RatFile:
         a ``dtype`` keyword if the proper datatype wasn't specified in
         header's ``RatHeaderRat.var`` attribute).
 
-        :param shape: the shape of the data to store in \*.rat file
-        :type shape: list
-        :param header: a rat header
-        :type header: RatHeaderRat
-        :keyword dtype: data type
-        :type dtype: type or string
+        Parameters
+        ----------
+        shape : list, optional
+            The shape of the data to store in *.rat file.
+        header : RatHeaderRat, optional
+            A rat header.
+        kwargs : dict
+            Additional keyword arguments.
 
-        :return: None
+        Keywords
+        --------
+        dtype : type or str, optional
+            Data type.
+        rattype : int, optional
+            Specifies RAT file type.
 
-        :raises: IOError
+        Returns
+        -------
+        None
 
-        .. note::
+        Raises
+        ------
+        IOError
 
-          1) The ``dtype`` keyword maybe given either as a string
-             (i.e. 'int16') or as a numpy ``type`` instance (i.e. ``np.int16``).
-
-          2) The function creates an empty binary file which is a sparse file
-             for Linux and Windows, OS X however doesn't support sparse files
-             so it will be just an empty file there.
-
+        Notes
+        -----
+        1) The ``dtype`` keyword may be given either as a string (i.e. 'int16')
+        or as a numpy ``type`` instance (i.e. ``np.int16``).
+        2) The function creates an empty binary file which is a sparse file for
+        Linux and Windows. OS X, however, doesn't support sparse files so it
+        will be just an empty file there.
         """
         # raise an error if neither header nor shape is given as an arg
         if (header is None) and (shape is None):
@@ -419,17 +586,18 @@ class RatFile:
         return self
 
     def write(self, arr=[], **kwargs):
-        """Write either a whole data array or a block of data into a rat file.
+        """
+        Write either a whole data array or a block of data into a rat file.
 
         The following usages are available:
 
         Write a whole data array either with or without the ``header`` keyword.
-        In latter case the parameters of the array (shape and dtype), are parsed
-        into an empty ``header`` instance and written to the file. In this case
-        it's also possible to explicitly specify ``rattype`` keyword.
+        In the latter case, the parameters of the array (shape and dtype) are
+        parsed into an empty ``header`` instance and written to the file. In
+        this case, it's also possible to explicitly specify ``rattype`` keyword.
 
         When specifying the ``header`` keyword it is also possible to specify
-        ``shape``, ``dtype`` and ``rattype`` keywords so the values of these
+        ``shape``, ``dtype``, and ``rattype`` keywords so the values of these
         parameters contained in ``header`` will be overwritten.
 
         When using a ``block`` keyword it is supposed that the header was
@@ -441,32 +609,37 @@ class RatFile:
         ``RatHeader`` instance.
 
         Using a ``block`` keyword for 2D arrays the offset in both axes is
-        possible (i.e. if the shape specified in header is [100,200], then a
-        block can be equal to [20,50, 130, 200]). In other cases only an offset
-        along the first axis is supported. The data type of the ``arr`` should
-        correspond to the one given in previously written ``header``, otherwise
-        an error will be raised.
+        possible (i.e. if the shape specified in the header is [100,200], then
+        a block can be equal to [20,50, 130, 200]). In other cases only an
+        offset along the first axis is supported. The data type of the ``arr``
+        should correspond to the one given in previously written ``header``,
+        otherwise, an error will be raised.
 
-        :param arr: array to be stored in rat file
-        :type arr: numpy.ndarray
+        Parameters
+        ----------
+        arr : numpy.ndarray, optional
+            Array to be stored in rat file.
+        kwargs : dict
+            Additional keyword arguments.
 
-        **Keywords**:
-          :param block: a position, where to write an array; has the following
-            form ``[start_1, stop_1, ..., ..., start_N, stop_N]``, where ``N``
-            is a number of array's dimensions.
-          :type block: list
-          :param header: RAT header
-          :type header: RatHeaderRat
-          :param shape: shape to overwrite the shape of the header
-          :type shape: list
-          :param dtype: data type to be written into header
-          :param rattype: numpy.dtype or a string
-          :param rattype: specifies RAT file type
-          :type rattype: int
+        Keywords
+        --------
+        block : list, optional
+            A position where to write an array; has the following form
+            [start_1, stop_1, ..., ..., start_N, stop_N], where N is a number
+            of array's dimensions.
+        header : RatHeaderRat, optional
+            RAT header.
+        shape : list, optional
+            Shape to overwrite the shape of the header.
+        dtype : type or str, optional
+            Data type to be written into the header.
+        rattype : int, optional
+            Specifies RAT file type.
 
-
-        :raises: IOError
-
+        Raises
+        ------
+        IOError
         """
 
         arr = np.asarray(arr)
@@ -535,7 +708,7 @@ class RatFile:
                 # parse array parameters to the Header
                 self.Header = RatHeader(
                     shape=(arr.shape if 'shape' not in kwargs else kwargs['shape']),
-                    var=np.ctypeslib.array(get_var(arr.dtype)),
+                    var=np.ctypeslib.as_array(get_var(arr.dtype)),
                 )
                 if 'rattype' in kwargs:
                     self.Header.Rat.rattype = kwargs['rattype']
@@ -567,21 +740,27 @@ class RatFile:
 
     # --------------------------------------------------------------------------
     def read(self, **kwargs):
-        """Read the data from ``RAT`` file as a numpy array.
+        """
+        Read either the entire data array or a block of data from a RAT file.
 
-        Works both with ``RAT`` 1.0 and 2.0 files, allows to read the data in
-        blocks along all the axes.
+        Either the whole data array or a block of data can be read from the rat
+        file.
 
-        **Keywords**:
-          :param block: the block of data to read;
-            ``block=[start_1, stop_1, ..., ..., start_N, stop_N]``, where ``N``
-            is a number of axes.
+        Parameters
+        ----------
+        block : list, optional
+            A block of data to read; has the following form
+            [start_1, stop_1, ..., ..., start_N, stop_N], where N is a number
+            of array's dimensions.
 
-        :return: numpy.ndarray
+        Returns
+        -------
+        arr : numpy.ndarray
+            Read array.
 
-        :raises: IOError if the file doesn't exist, if ``RAT`` version is not
-          recognized and when ``block`` doesn't correspond to the shape of
-          ``RAT`` header.
+        Raises
+        ------
+        IOError
         """
         if self.exists == False:
             self._ioerror('ERROR: The file "%s" does not exist' % self.filename)
@@ -616,22 +795,29 @@ class RatFile:
 
     # --------------------------------------------------------------------------
     def mread(self, **kwargs):
-        """Read the data from ``RAT`` file as a numpy array fast using a memory
-        map (attention: the array is opened in read-only mode).
+        """
+        Read data from a RAT file as a NumPy array using memory map.
 
-        Works both with ``RAT`` 1.0 and 2.0 files, allows to read the data in
-        blocks along all the axes.
+        Works with both RAT 1.0 and 2.0 files. Allows reading data in blocks
+        along all axes.
 
-        **Keywords**:
-          :param block: the block of data to read;
-            ``block=[start_1, stop_1, ..., ..., start_N, stop_N]``, where ``N``
-            is a number of axes.
+        Parameters
+        ----------
+        block : list, optional
+            The block of data to read; has the following form
+            [start_1, stop_1, ..., ..., start_N, stop_N], where N is a number
+            of axes.
 
-        :return: numpy.ndarray
+        Returns
+        -------
+        arr : numpy.ndarray
+            Read array.
 
-        :raises: IOError if the file doesn't exist, if ``RAT`` version is not
-          recognized and when ``block`` doesn't correspond to the shape of
-          ``RAT`` header.
+        Raises
+        ------
+        IOError
+            If the file doesn't exist, if RAT version is not recognized,
+            and when the block doesn't correspond to the shape of the RAT header.
         """
         if self.exists == False:
             self._ioerror('ERROR: The file is not found')
@@ -663,12 +849,18 @@ class RatFile:
         return arr
 
     def append(self, arr):
-        """Append the ``RAT`` file with a given array along the first axis.
+        """
+        Append the RAT file with a given array along the first axis.
 
-        :param arr: the array to write
-        :type arr: numpy.ndarray
+        Parameters
+        ----------
+        arr : numpy.ndarray
+            The array to write.
 
-        :raises: warning if the dimensions specified in file's header are exceed
+        Raises
+        ------
+        Warning
+            If the dimensions specified in the file's header are exceeded.
         """
         # self.read_header()
         # check if datatype of arr and of 'var' are the same
@@ -701,6 +893,14 @@ class RatFile:
 
     # --------------------------------------------------------------------------
     def read_header(self):
+        """
+        Read RAT file header, supporting both RAT 1.0 and 2.0 versions.
+
+        Raises
+        ------
+        IOError
+            If RAT version is not supported.
+        """
         # reading the version
         self.version = self.get_version()[0]
         """Read ``RAT`` header; supports both ``RAT`` 1.0 and 2.0 versions."""
@@ -738,6 +938,20 @@ class RatFile:
     # --------------------------------------------------------------------------
 
     def write_envi_header(self, info='', sensorType='DLR F-SAR'):
+        """
+        Write ENVI header for the RAT file.
+
+        Parameters
+        ----------
+        info : str, optional
+            Description to be included in the ENVI header.
+        sensorType : str, optional
+            Sensor type information.
+
+        Raises
+        ------
+        None
+        """
         hdrFile = self.filename + '.hdr'
         with open(hdrFile, 'w') as f:
             f.write('ENVI\n')
@@ -755,7 +969,17 @@ class RatFile:
                 f.write('sensor type     = %s\n' % sensorType)
 
     def write_geo_envi_header(self):
-        tmpl = Template(resource_string(__package__ + '.templates', 'envihdr.tpl'))
+        """
+        Write geographic information to the ENVI header.
+
+        Raises
+        ------
+        None
+        """
+        # tmpl = Template(resource_string(__package__ + '.templates', 'envihdr.tpl'))
+        tmpl = Template(
+            resources.files(__package__).joinpath('.templates', 'envihdr.tpl')
+        )
         envi_hdr = tmpl.render(file=self.filename, hdr=self.Header)
         with open(self.filename + '.hdr', 'w') as f:
             f.write(envi_hdr)
@@ -763,10 +987,11 @@ class RatFile:
     # --------------------------------------------------------------------------
 
     def help(self):
-        """Print basic imformation about ``RAT`` file.
+        """
+        Print basic information about the RAT file.
 
-        Print ``shape``, ``data type`` and ``info`` from file's header.
-        If the file doesn't exist, then print ``empty file``.
+        Print shape, data type, and info from the file's header.
+        If the file doesn't exist, then print "empty file".
         """
         print()
         print("FILE  : ", os.path.abspath(self.filename))
@@ -780,33 +1005,80 @@ class RatFile:
     # --------------------------------------------------------------------------
 
     def get_version(self):
-        """Get the version of ``RAT`` file: 1.0 or 2.0."""
+        """
+        Get the version of RAT file: 1.0 or 2.0.
+
+        Returns
+        -------
+        tuple
+            A tuple containing the RAT file version (1.0 or 2.0) and XDR flag.
+
+        Notes
+        -----
+        This method reads the magic number and checks whether it corresponds to
+        RAT version 1.0 or 2.0. If the magic number indicates version 1.0, it
+        additionally checks for endianness using the number of dimensions (ndim).
+
+        If a RAT V1 file is detected, it returns a tuple (1.0, 0). If a RAT V2
+        file is found, it returns a tuple (2.0, 0).
+
+        Raises
+        ------
+        OSError
+            If an error occurs during file reading or if the RAT version is not recognized.
+        """
         Header = RatHeader()
         magiclong = Header.Rat.magiclong
         magicreal = 0
 
         with open(self.filename, 'rb') as lun:
             magicreal = np.fromfile(file=lun, dtype="i4", count=1)
+
         if magicreal != magiclong:  # Check if maybe we have a RAT V1 File...
             with open(self.filename, 'rb') as lun:
                 ndim = np.fromfile(file=lun, dtype="<i4", count=1)
+
             xdrflag = 0
             if ndim < 0 or ndim > 9:
                 ndim = ndim.byteswap()
                 xdrflag = 1
+
             if ndim < 0 or ndim > 9:
                 print(red + "ERROR: format not recognised!" + endc)
                 return False, False
+
             version = 1.0
         else:  # -------------- Yeah, RAT 2.0 found
             with open(self.filename, 'rb') as lun:
                 lun.seek(4)
                 version = np.fromfile(file=lun, dtype="float32", count=1)[0]
+
             xdrflag = 0
 
         return version, xdrflag
 
     def _check_block(self, block, **kwargs):
+        """
+        Check the validity of the block for writing an array.
+
+        Parameters
+        ----------
+        block : list
+            A position where to write an array, in the form [start_1, stop_1, ..., start_N, stop_N].
+        kwargs : dict
+            Keyword arguments.
+
+        Returns
+        -------
+        block : np.ndarray
+            Validated block.
+
+        Raises
+        ------
+        IOError
+            If block extent is not given by integers, contains negative values,
+            or exceeds the array shape.
+        """
         if len(block) == 4:  # only 2D block provided
             block = list(block)
             dimlist = list(self.shape)
@@ -856,7 +1128,20 @@ class RatFile:
         return block
 
     def _check_dtypes(self, arr):
-        """Check if dtypes of given array and the one in header are equal"""
+        """
+        Check if dtypes of given array and the one in header are equal.
+
+        Parameters
+        ----------
+        arr : np.ndarray
+            The array to be checked.
+
+        Raises
+        ------
+        IOError
+            If data type of the array to be written does not correspond
+            to the one specified in the file's header.
+        """
         if self.Header.Rat.var != get_var(arr.dtype).value:
             self._ioerror(
                 'The data type of the array to be written and '
@@ -865,20 +1150,57 @@ class RatFile:
             )
 
     def _get_dtype(self):
-        """Get data type give ```Header.Rat.var``."""
+        """
+        Get data type given by `Header.Rat.var`.
+
+        Returns
+        -------
+        dtype : np.dtype
+            Data type.
+        """
         try:
             return np.dtype(dtype_dict[self.Header.Rat.var])
         except KeyError:
             self._ioerror('The data type is either not specified or ' 'not supported!')
 
     def _get_shape(self):
-        """Get numpy array shape from ``Header.Rat.shape`` that is IDL style"""
+        """
+        Get numpy array shape from `Header.Rat.shape` that is IDL style.
+
+        Returns
+        -------
+        shape : tuple
+            Numpy array shape.
+        """
         shape = np.ctypeslib.as_array(self.Header.Rat.idl_shape)
         shape = shape[shape != 0]
         return tuple(shape[::-1])
 
 
 def check_ratformat(filename):
+    """
+    Check if the RAT file format is valid.
+
+    Parameters
+    ----------
+    filename : str
+        The path to the RAT file.
+
+    Returns
+    -------
+    bool
+        Returns True if the file format is RAT2 (version 2.0), and False otherwise.
+
+    Notes
+    -----
+    This function reads the first 4 bytes (magic number) of the RAT file to
+    determine if it follows the RAT2 (version 2.0) format.
+
+    Raises
+    ------
+    OSError
+        If an error occurs during file reading.
+    """
     with open(filename, 'rb') as lun:
         magiclong = lun.read(4)
         if magiclong == b'RAT2':
@@ -888,7 +1210,24 @@ def check_ratformat(filename):
 
 
 def get_var(dtype):
-    """Get ``RatHeaderRat.var`` value given ``dtype``."""
+    """
+    Get ``RatHeaderRat.var`` value given ``dtype``.
+
+    Parameters
+    ----------
+    dtype : numpy.dtype
+        The NumPy data type.
+
+    Returns
+    -------
+    ctypes.c_int
+        The value corresponding to ``RatHeaderRat.var`` for the given data type.
+
+    Raises
+    ------
+    OSError
+        If the data type is not supported according to the ``dtype_dict`` mapping.
+    """
     var = [key for (key, value) in dtype_dict.items() if value == dtype]
     if var == []:
         RatFile._ioerror('The data type is not supported!')
@@ -937,9 +1276,62 @@ class Py2Xml:
     pp.v0 = 100
     pp.write('path_to_new_pp.xml')
 
+    Parameters
+    ----------
+    root : str or Element
+        The path to the XML file or an Element object representing the root.
+
+    Raises
+    ------
+    ValueError
+        If the expected "object" element is not found below the root element.
+
+    Methods
+    -------
+    copy()
+        Create a deep copy of the Py2Xml instance.
+
+    params()
+        Get a list of parameter names.
+
+    write(filename)
+        Write the XML structure to the specified file.
+
+    tostring()
+        Get the XML structure as a string.
+
+    fromstring(string)
+        Create a Py2Xml instance from an XML string.
+
+    Attributes
+    ----------
+    __iterend__ : bool
+        Internal attribute to track the end of iteration.
+
+    Notes
+    -----
+    The class uses ElementTree for XML parsing and manipulation. It provides methods to convert
+    between XML and Python objects, allowing convenient access and modification of parameters.
+
+    See Also
+    --------
+    xml.etree.ElementTree
     """
 
     def __init__(self, root):
+        """
+        Initialize Py2Xml instance.
+
+        Parameters
+        ----------
+        root : str or Element
+            The path to the XML file or an Element object representing the root.
+
+        Raises
+        ------
+        ValueError
+            If the expected "object" element is not found below the root element.
+        """
         if isinstance(root, str):
             self.__dict__['__root__'] = ET.parse(root).find('object')
         else:
