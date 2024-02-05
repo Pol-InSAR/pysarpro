@@ -144,4 +144,5 @@ cython_cpp_args = cython_c_args
 subdir('_shared')
 subdir('data')
 subdir('io')
+subdir('models')
 subdir('util')
