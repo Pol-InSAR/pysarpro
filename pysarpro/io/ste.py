@@ -1,8 +1,4 @@
-""""
-Provides the possibility to work with RAT files, widely
-used by DLR-HR institute and some others.
-
-"""
+""""Provides the possibility to work with RAT files, widely used by DLR-HR institute and some others."""
 
 import copy
 import ctypes
