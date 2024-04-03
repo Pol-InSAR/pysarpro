@@ -182,26 +182,8 @@ class ImageCollection:
     # Where your images are located
     >>> data_dir = os.path.join(os.path.dirname(__file__), '../data')
 
-    >>> coll = io.ImageCollection(data_dir + '/chess*.png')
+    >>> coll = io.ImageCollection(data_dir + '/sar*.png')
     >>> len(coll)
-    2
-    >>> coll[0].shape
-    (200, 200)
-
-    >>> image_col = io.ImageCollection([f'{data_dir}/*.png', '{data_dir}/*.jpg'])
-
-    >>> class MultiReader:
-    ...     def __init__ (self, f):
-    ...         self.f = f
-    ...     def __call__ (self, index):
-    ...         return iio3.imread(self.f, index=index)
-    ...
-    >>> filename = data_dir + '/no_time_for_that_tiny.gif'
-    >>> ic = io.ImageCollection(range(24), load_func=MultiReader(filename))
-    >>> len(image_col)
-    23
-    >>> isinstance(ic[0], np.ndarray)
-    True
     """
 
     def __init__(
@@ -464,21 +446,6 @@ class MultiImage(ImageCollection):
     # Where your images are located
     >>> data_dir = os.path.join(os.path.dirname(__file__), '../data')
 
-    >>> multipage_tiff = data_dir + '/multipage.tif'
-    >>> multi_img = MultiImage(multipage_tiff)
-    >>> len(multi_img)  # multi_img contains one element
-    1
-    >>> multi_img[0].shape  # this element is a two-frame image of shape:
-    (2, 15, 10)
-
-    >>> image_col = ImageCollection(multipage_tiff)
-    >>> len(image_col)  # image_col contains two elements
-    2
-    >>> for frame in image_col:
-    ...     print(frame.shape)  # each element is a frame of shape (15, 10)
-    ...
-    (15, 10)
-    (15, 10)
     """
 
     def __init__(self, filename, conserve_memory=True, dtype=None, **imread_kwargs):

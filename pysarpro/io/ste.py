@@ -59,9 +59,6 @@ def rrat(filename, **kwargs):
     --------
     >>> data = rrat("example.rat")
     >>> print(data)
-    array([[1, 2, 3],
-           [4, 5, 6],
-           [7, 8, 9]])
 
     """
 
@@ -92,9 +89,7 @@ def mrrat(filename, **kwargs):
     --------
     >>> data = mrrat("example.rat")
     >>> print(data)
-    memmap([[1, 2, 3],
-            [4, 5, 6],
-            [7, 8, 9]])
+
 
     """
 

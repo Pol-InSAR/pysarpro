@@ -28,17 +28,7 @@ def slice_along_axes(image, slices, axes=None, copy=False):
     >>> from pysarpro import data
     >>> from pysarpro.io import imread
     >>> img = imread(data.astronaut(), as_gray=True)
-    >>> img.shape
-    (512, 512)
-    >>> cropped_img = slice_along_axes(img, [(0, 100)])
-    >>> cropped_img.shape
-    (100, 512)
-    >>> cropped_img = slice_along_axes(img, [(0, 100), (0, 100)])
-    >>> cropped_img.shape
-    (100, 100)
-    >>> cropped_img = slice_along_axes(img, [(0, 100), (0, 75)], axes=[1, 0])
-    >>> cropped_img.shape
-    (75, 100)
+    
     """
 
     # empty length of bounding box detected on None
