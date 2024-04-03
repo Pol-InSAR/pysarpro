@@ -27,8 +27,6 @@ def slice_along_axes(image, slices, axes=None, copy=False):
     --------
     >>> from pysarpro import data
     >>> from pysarpro.io import imread
-    >>> img = imread(data.astronaut(), as_gray=True)
-    
     """
 
     # empty length of bounding box detected on None

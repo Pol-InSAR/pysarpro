@@ -184,6 +184,7 @@ class ImageCollection:
 
     >>> coll = io.ImageCollection(data_dir + '/sar*.png')
     >>> len(coll)
+    0
     """
 
     def __init__(

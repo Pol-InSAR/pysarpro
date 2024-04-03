@@ -55,10 +55,6 @@ def rrat(filename, **kwargs):
     numpy.ndarray
         The contents of the RAT file as a numpy array.
 
-    Examples
-    --------
-    >>> data = rrat("example.rat")
-    >>> print(data)
 
     """
 
@@ -84,12 +80,6 @@ def mrrat(filename, **kwargs):
     -------
     numpy.memmap
         A memory-mapped view of the RAT file contents as a numpy array.
-
-    Examples
-    --------
-    >>> data = mrrat("example.rat")
-    >>> print(data)
-
 
     """
 
