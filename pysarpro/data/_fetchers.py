@@ -5,8 +5,10 @@ For more images, see
  - http://sipi.usc.edu/database/database.php
 
 """
+
 import os
 import os.path as osp
+import re
 import shutil
 
 from .. import __version__
@@ -234,7 +236,7 @@ def _fetch(data_filename):
         ) from err
 
 
-def download_all(directory=None):
+def download_all(directory=None, pattern=None):
     """Download all datasets for use with pysarpro offline.
 
     pysarpro datasets are no longer shipped with the library by default.
@@ -253,6 +255,8 @@ def download_all(directory=None):
     ----------
     directory: path-like, optional
         The directory where the dataset should be stored.
+    pattern: str, optional
+        A regex pattern to filter the datasets to be downloaded.
 
     Raises
     ------
@@ -283,6 +287,8 @@ def download_all(directory=None):
         _ensure_cache_dir(target_dir=_image_fetcher.path)
 
         for data_filename in _image_fetcher.registry:
+            if pattern is not None and not re.search(pattern, data_filename):
+                continue
             file_path = _fetch(data_filename)
 
             # Copy to `directory` or implicit cache if it is not already there

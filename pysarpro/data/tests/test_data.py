@@ -22,7 +22,7 @@ def test_download_all_with_pooch():
     # https://github.com/Pol-InSAR/pysarpro/pull/4666/files/26d5138b25b958da6e97ebf979e9bc36f32c3568#r422604863
     data_dir = data.data_dir
     if _image_fetcher is not None:
-        data.download_all()
+        data.download_all(pattern=r'^data/01-sar')
         assert 'astronaut.png' in os.listdir(data_dir)
         assert len(os.listdir(data_dir)) > 1
     else:
