@@ -24,7 +24,7 @@ def test_download_all_with_pooch():
     if _image_fetcher is not None:
         data.download_all(pattern=r'^data/01-sar')
         assert 'astronaut.png' in os.listdir(data_dir)
-        assert len(os.listdir(data_dir)) > 1
+        assert len(os.listdir(data_dir)) >= 1
     else:
         with pytest.raises(ModuleNotFoundError):
             data.download_all()

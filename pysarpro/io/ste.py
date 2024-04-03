@@ -143,7 +143,7 @@ class RatHeaderRat(ctypes.Structure):
     `shape`, `ndim`, `nchannel`), the priority in determining the value of `ndim`
     and `nchannel` parameters is given to `shape` parameter. That means that `ndim`
     is calculated as `len(shape)` and `nchannel` can be given as `**kwargs`, if not
-    given then it is equal either to `product(shape[2::])` if `ndim > 2` or to `1` if
+    given then it is equal either to `prod(shape[2::])` if `ndim > 2` or to `1` if
     `ndim < 2`.
     """
 
@@ -215,7 +215,7 @@ class RatHeaderRat(ctypes.Structure):
                     self.nchannel = ctypes.c_int(1)
                 else:
                     #    self.nchannel = ctypes.c_int(kwargs['shape'][-1])
-                    self.nchannel = ctypes.c_int(np.product(kwargs['shape'][2::]))
+                    self.nchannel = ctypes.c_int(np.prod(kwargs['shape'][2::]))
         if 'var' in kwargs:
             self.var = ctypes.c_int(kwargs['var'])
         if 'rattype' in kwargs:
@@ -543,7 +543,7 @@ class RatFile:
         self.shape = self._get_shape()
         self.dtype = self._get_dtype()
         self.Header.Rat.ndim = ctypes.c_int(len(self.shape))
-        self.Header.Rat.nchannel = ctypes.c_int(int(np.product(self.shape[2:])))
+        self.Header.Rat.nchannel = ctypes.c_int(int(np.prod(self.shape[2:])))
 
         if 'rattype' in kwargs:
             self.Header.Rat.rattype = ctypes.c_int(kwargs['rattype'])
@@ -693,7 +693,7 @@ class RatFile:
             self.dtype = self._get_dtype()
             self.shape = self._get_shape()
             self.Header.Rat.ndim = ctypes.c_int(len(self.shape))
-            self.Header.Rat.nchannel = ctypes.c_int(int(np.product(self.shape[2:])))
+            self.Header.Rat.nchannel = ctypes.c_int(int(np.prod(self.shape[2:])))
 
             n_bytes_total = (
                 1000 + reduce(lambda x, y: x * y, self.shape) * self.dtype.itemsize
