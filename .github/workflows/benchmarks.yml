@@ -27,10 +27,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v4
-        name: Install Python
+      - uses: conda-incubator/setup-miniconda@v3
         with:
+          auto-update-conda: true
           python-version: "3.11"
+      # - uses: actions/setup-python@v4
+      #   name: Install Python
+      #   with:
+      #     python-version: "3.11"
 
       - name: Setup some dependencies
         shell: bash -l {0}

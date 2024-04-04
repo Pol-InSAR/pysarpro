@@ -66,11 +66,15 @@ jobs:
       - name: Checkout pysarpro
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: conda-incubator/setup-miniconda@v3
         with:
+          auto-update-conda: true
           python-version: ${{ matrix.python-version}}
-          allow-prereleases: true
+      # - name: Setup Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: ${{ matrix.python-version}}
+      #     allow-prereleases: true
 
       - name: Build package
         env:
@@ -139,11 +143,15 @@ jobs:
       - name: Checkout pysarpro
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: conda-incubator/setup-miniconda@v3
         with:
+          auto-update-conda: true
           python-version: ${{ matrix.python-version}}
-          allow-prereleases: true
+      # - name: Setup Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: ${{ matrix.python-version}}
+      #     allow-prereleases: true
 
       - name: OSX configuration
         run: |
