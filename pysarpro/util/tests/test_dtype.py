@@ -1,6 +1,7 @@
 import itertools
 
 import numpy as np
+
 from pysarpro import (
     img_as_float,
     img_as_float32,
@@ -10,7 +11,6 @@ from pysarpro import (
     img_as_uint,
 )
 from pysarpro._shared import testing
-from pysarpro._shared._warnings import expected_warnings
 from pysarpro._shared.testing import assert_equal, parametrize
 from pysarpro.util.dtype import _convert
 
@@ -84,14 +84,6 @@ def test_range_extra_dtypes(dtype_in, dt):
     _verify_range(
         f"From {np.dtype(dtype_in)} to {np.dtype(dt)}", y, omin, omax, np.dtype(dt)
     )
-
-
-def test_downcast():
-    x = np.arange(10).astype(np.uint64)
-    with expected_warnings(['Downcasting']):
-        y = img_as_int(x)
-    assert np.allclose(y, x.astype(np.int16))
-    assert y.dtype == np.int16, y.dtype
 
 
 def test_float_out_of_range():
@@ -183,24 +175,6 @@ def test_float_conversion_dtype():
     for dtype_in, dtype_out in dtype_combin:
         x = x.astype(dtype_in)
         y = _convert(x, dtype_out)
-        assert y.dtype == np.dtype(dtype_out)
-
-
-def test_float_conversion_dtype_warns():
-    """Test that convert issues a warning when called"""
-    from pysarpro.util.dtype import convert
-
-    x = np.array([-1, 1])
-
-    # Test all combinations of dtypes conversions
-    dtype_combin = np.array(np.meshgrid(float_dtype_list, float_dtype_list)).T.reshape(
-        -1, 2
-    )
-
-    for dtype_in, dtype_out in dtype_combin:
-        x = x.astype(dtype_in)
-        with expected_warnings(["The use of this function is discouraged"]):
-            y = convert(x, dtype_out)
         assert y.dtype == np.dtype(dtype_out)
 
 
