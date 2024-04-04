@@ -244,6 +244,7 @@ repos:
     rev: v1.33.0
     hooks:
       - id: yamllint
+        exclude: ^(.github/)
 
   - repo: https://github.com/codespell-project/codespell
     rev: v2.2.6
