@@ -12,3 +12,4 @@ dependencies:
   - pydot
   - make
   - llvm-openmp
+  - clang
