@@ -70,6 +70,10 @@ jobs:
         with:
           auto-update-conda: true
           python-version: ${{ matrix.python-version}}
+          environment-file: conda/dev.yaml
+          activate-environment: pysarpro
+          use-mamba: true
+          miniforge-variant: Mambaforge
       # - name: Setup Python
       #   uses: actions/setup-python@v4
       #   with:
