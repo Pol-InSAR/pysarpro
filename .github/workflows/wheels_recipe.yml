@@ -166,8 +166,10 @@ jobs:
           # use conda to install llvm-openmp
           # Note that we do NOT activate the conda environment, we just add the
           # library install path to CFLAGS/CXXFLAGS/LDFLAGS below.
-          sudo conda create -n build $OPENMP_URL
-          PREFIX="/usr/local/miniconda/envs/build"
+          # sudo conda create -n build $OPENMP_URL
+          # PREFIX="/usr/local/miniconda/envs/build"
+          mamba install $OPENMP_URL
+          PREFIX=$CONDA_PREFIX
           export CC=/usr/bin/clang
           export CXX=/usr/bin/clang++
           export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
