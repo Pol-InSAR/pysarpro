@@ -209,6 +209,10 @@ jobs:
         with:
           auto-update-conda: true
           python-version: "3.11"
+          environment-file: conda/dev.yaml
+          activate-environment: pysarpro
+          use-mamba: true
+          miniforge-variant: Mambaforge
       # - uses: actions/setup-python@v4
       #   name: Install Python
       #   with:
@@ -229,8 +233,7 @@ jobs:
             $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
               $installationPath = & $vswhere -prerelease -legacy -latest -property installationPath
               $Command = Join-Path $installationPath "Common7\Tools\vsdevcmd.bat"
-            & "${env:COMSPEC}" /s /c "`"$Command`" -arch=amd64 -no_logo && \
-            set" | Foreach-Object {
+            & "${env:COMSPEC}" /s /c "`"$Command`" -arch=amd64 -no_logo && set" | Foreach-Object {
                   if ($_ -match '^([^=]+)=(.*)') {
                       [System.Environment]::SetEnvironmentVariable($matches[1], $matches[2])
                   }
