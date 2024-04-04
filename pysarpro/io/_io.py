@@ -7,12 +7,12 @@ from ..io.manage_plugins import call_plugin
 from .util import file_or_url_context
 
 __all__ = [
-    'imread',
-    'imsave',
-    'imshow',
-    'show',
-    'imread_collection',
-    'imshow_collection',
+    "imread",
+    "imsave",
+    "imshow",
+    "show",
+    "imread_collection",
+    "imshow_collection",
 ]
 
 
@@ -48,14 +48,14 @@ def imread(fname, as_gray=False, plugin=None, **plugin_args):
     if isinstance(fname, pathlib.Path):
         fname = str(fname.resolve())
 
-    if plugin is None and hasattr(fname, 'lower'):
-        if fname.lower().endswith(('.tiff', '.tif')):
-            plugin = 'tifffile'
+    if plugin is None and hasattr(fname, "lower"):
+        if fname.lower().endswith((".tiff", ".tif")):
+            plugin = "tifffile"
 
     with file_or_url_context(fname) as fname:
-        img = call_plugin('imread', fname, plugin=plugin, **plugin_args)
+        img = call_plugin("imread", fname, plugin=plugin, **plugin_args)
 
-    if not hasattr(img, 'ndim'):
+    if not hasattr(img, "ndim"):
         return img
 
     if img.ndim > 2:
@@ -92,7 +92,7 @@ def imread_collection(load_pattern, conserve_memory=True, plugin=None, **plugin_
 
     """
     return call_plugin(
-        'imread_collection', load_pattern, conserve_memory, plugin=plugin, **plugin_args
+        "imread_collection", load_pattern, conserve_memory, plugin=plugin, **plugin_args
     )
 
 
@@ -128,19 +128,19 @@ def imsave(fname, arr, plugin=None, check_contrast=True, **plugin_args):
     """
     if isinstance(fname, pathlib.Path):
         fname = str(fname.resolve())
-    if plugin is None and hasattr(fname, 'lower'):
-        if fname.lower().endswith(('.tiff', '.tif')):
-            plugin = 'tifffile'
+    if plugin is None and hasattr(fname, "lower"):
+        if fname.lower().endswith((".tiff", ".tif")):
+            plugin = "tifffile"
     if arr.dtype == bool:
         warn(
-            f'{fname} is a boolean image: setting True to 255 and False to 0. '
-            'To silence this warning, please convert the image using '
-            'img_as_ubyte.',
+            f"{fname} is a boolean image: setting True to 255 and False to 0. "
+            "To silence this warning, please convert the image using "
+            "img_as_ubyte.",
             stacklevel=2,
         )
-        arr = arr.astype('uint8') * 255
+        arr = arr.astype("uint8") * 255
 
-    return call_plugin('imsave', fname, arr, plugin=plugin, **plugin_args)
+    return call_plugin("imsave", fname, arr, plugin=plugin, **plugin_args)
 
 
 def imshow(arr, plugin=None, **plugin_args):
@@ -161,8 +161,8 @@ def imshow(arr, plugin=None, **plugin_args):
 
     """
     if isinstance(arr, str):
-        arr = call_plugin('imread', arr, plugin=plugin)
-    return call_plugin('imshow', arr, plugin=plugin, **plugin_args)
+        arr = call_plugin("imread", arr, plugin=plugin)
+    return call_plugin("imshow", arr, plugin=plugin, **plugin_args)
 
 
 def imshow_collection(ic, plugin=None, **plugin_args):
@@ -182,7 +182,7 @@ def imshow_collection(ic, plugin=None, **plugin_args):
         Passed to the given plugin.
 
     """
-    return call_plugin('imshow_collection', ic, plugin=plugin, **plugin_args)
+    return call_plugin("imshow_collection", ic, plugin=plugin, **plugin_args)
 
 
 def show():
@@ -194,15 +194,5 @@ def show():
 
     A call to `show` will block execution of code until all windows
     have been closed.
-
-    Examples
-    --------
-    >>> import pysarpro.io as io
-
-    >>> rng = np.random.default_rng()
-    >>> for i in range(4):
-    ...     ax_im = io.imshow(rng.random((50, 50)))
-    >>> io.show() # doctest: +SKIP
-
     """
-    return call_plugin('_app_show')
+    return call_plugin("_app_show")
