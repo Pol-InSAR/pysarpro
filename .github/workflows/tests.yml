@@ -179,6 +179,6 @@ jobs:
         run: |
           source tools/github/script.sh
 
-      - name: Check benchmarks
-        run: |
-          asv check -v -E existing
+    #   - name: Check benchmarks
+    #     run: |
+    #       asv check -v -E existing

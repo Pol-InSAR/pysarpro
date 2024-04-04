@@ -227,8 +227,7 @@ jobs:
         run: |
           function Invoke-VSDevEnvironment {
             $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-              $installationPath = & $vswhere -prerelease -legacy -latest -property \
-              installationPath
+              $installationPath = & $vswhere -prerelease -legacy -latest -property installationPath
               $Command = Join-Path $installationPath "Common7\Tools\vsdevcmd.bat"
             & "${env:COMSPEC}" /s /c "`"$Command`" -arch=amd64 -no_logo && \
             set" | Foreach-Object {
