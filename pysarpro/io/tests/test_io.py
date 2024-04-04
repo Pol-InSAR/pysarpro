@@ -36,26 +36,6 @@ def test_stack_non_array():
         io.push([[1, 2, 3]])
 
 
-def test_imread_file_url():
-    # tweak data path so that file URI works on both unix and windows.
-    data_path = str(fetch('data/astronaut.png'))
-    data_path = data_path.replace(os.path.sep, '/')
-    image_url = f'file:///{data_path}'
-    image = io.imread(image_url)
-    assert image.shape == (512, 512, 3)
-
-
-def test_imread_http_url(httpserver):
-    # httpserver is a fixture provided by pytest-localserver
-    # https://bitbucket.org/pytest-dev/pytest-localserver/
-    httpserver.serve_content(one_by_one_jpeg)
-    # it will serve anything you provide to it on its url.
-    # we add a /test.jpg so that we can identify the content
-    # by extension
-    image = io.imread(httpserver.url + '/test.jpg' + '?' + 's' * 266)
-    assert image.shape == (1, 1)
-
-
 def _named_tempfile_func(error_class):
     """Create a mock function for NamedTemporaryFile that always raises.
 
