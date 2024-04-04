@@ -168,14 +168,14 @@ jobs:
           # library install path to CFLAGS/CXXFLAGS/LDFLAGS below.
           # sudo conda create -n build $OPENMP_URL
           # PREFIX="/usr/local/miniconda/envs/build"
-          mamba install $OPENMP_URL
-          PREFIX=$CONDA_PREFIX
-          export CC=/usr/bin/clang
-          export CXX=/usr/bin/clang++
-          export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
-          export CFLAGS="$CFLAGS -Wno-implicit-function-declaration -I$PREFIX/include"
-          export CXXFLAGS="$CXXFLAGS -I$PREFIX/include"
-          export LDFLAGS="$LDFLAGS -Wl,-S -Wl,-rpath,$PREFIX/lib -L$PREFIX/lib -lomp"
+          # mamba install $OPENMP_URL
+          # PREFIX=$CONDA_PREFIX
+          # export CC=/usr/bin/clang
+          # export CXX=/usr/bin/clang++
+          # export CPPFLAGS="$CPPFLAGS -Xpreprocessor -fopenmp"
+          # export CFLAGS="$CFLAGS -Wno-implicit-function-declaration -I$PREFIX/include"
+          # export CXXFLAGS="$CXXFLAGS -I$PREFIX/include"
+          # export LDFLAGS="$LDFLAGS -Wl,-S -Wl,-rpath,$PREFIX/lib -L$PREFIX/lib -lomp"
 
           python -m cibuildwheel --output-dir dist
         env:
