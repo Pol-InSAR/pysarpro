@@ -167,7 +167,7 @@ The reverse can be achieved with :func:`~.img_as_ubyte`::
     >>> cv_image = sarproutil.img_as_ubyte(any_pysarpro_image)
 
 
-Image processing pipeline
+SAR processing pipeline
 =========================
 
 This dtype behavior allows you to string together any ``pysarpro`` function

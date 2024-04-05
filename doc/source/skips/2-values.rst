@@ -2,18 +2,10 @@
 SKIP 2 — pysarpro mission statement
 =======================================
 
-:Author: Juan Nunez-Iglesias <juan.nunez-iglesias@monash.edu>
-:Author: Stéfan van der Walt <stefanv@berkeley.edu>
-:Author: Josh Warner
-:Author: François Boulogne
-:Author: Emmanuelle Gouillart
-:Author: Mark Harfouche
-:Author: Lars Grüter
-:Author: Egor Panfilov
-:Author: Gregory Lee
+:Author: Islam Mansour <me@imansour.net>
 :Status: Active
 :Type: Process
-:Created: 2018-12-08
+:Created: 2023-12-01
 :Resolved:
 :Resolution:
 :pysarpro-Version: 0.16
@@ -66,7 +58,7 @@ Python. We accomplish this by:
   at least two core developers before being included in the library.
 - **caring for users’ data**. We have a functional [2]_ API and don't modify
   input arrays unless explicitly directed to do so.
-- promoting **education in image processing**, with extensive pedagogical
+- promoting **education in SAR processing**, with extensive pedagogical
   documentation.
 
 Our values

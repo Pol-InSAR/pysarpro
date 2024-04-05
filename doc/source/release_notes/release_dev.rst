@@ -3,7 +3,7 @@
 pysarpro 0.X.0 release notes
 ================================
 
-pysarpro is an image processing library for the scientific Python
+pysarpro is an SAR processing library for the scientific Python
 ecosystem that includes algorithms for segmentation, geometric
 transformations, feature detection, registration, color space
 manipulation, analysis, filtering, morphology, and more.

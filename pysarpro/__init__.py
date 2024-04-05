@@ -1,7 +1,7 @@
-"""Image Processing for Python
+"""SAR Processing for Python
 
-``pysarpro`` (a.k.a. ``pysarpro``) is a collection of algorithms for image
-processing and computer vision.
+``pysarpro`` (a.k.a. ``pysarpro``) is a collection of algorithms for SAR image
+processing.
 
 The main package of ``pysarpro`` only provides a few utilities for converting
 between image data types; for most features, you need to import one of the

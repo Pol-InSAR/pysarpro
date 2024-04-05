@@ -13,7 +13,7 @@ Python. We accomplish this by:
   at least two core developers before being included in the library.
 - **caring for users’ data**. We have a [functional API][functional] and don't modify
   input arrays unless explicitly directed to do so.
-- promoting **education in image processing**, with extensive pedagogical
+- promoting **education in SAR processing**, with extensive pedagogical
   documentation.
 
 (sec:values)=

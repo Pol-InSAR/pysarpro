@@ -13,7 +13,7 @@ Examples gallery
 ----------------
 
 The :ref:`examples_gallery` gallery provides graphical examples and
-code snippets of typical image processing tasks. There, you may find
+code snippets of typical SAR processing tasks. There, you may find
 an example that is close to your use case.
 
 Feel free to suggest new gallery examples on our `developer forum
@@ -42,7 +42,7 @@ Ask for help
 Still stuck? We are here to help! Reach out through:
 
 - our `user forum <https://forum.image.sc/tags/pysarpro>`_ for
-  image processing and usage questions;
+  SAR processing and usage questions;
 - our `developer forum
   <https://discuss.scientific-python.org/c/contributor/pysarpro>`_
   for technical questions and suggestions;

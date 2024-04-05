@@ -1,7 +1,7 @@
 [project]
 name = 'pysarpro'
-description = 'Image processing in Python'
-requires-python = '>=3.10'
+description = 'SAR processing in Python'
+requires-python = '>=3.9'
 readme = 'README.md'
 classifiers = [
     'Development Status :: 4 - Beta',
@@ -12,8 +12,10 @@ classifiers = [
     'Programming Language :: C',
     'Programming Language :: Python',
     'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
     'Programming Language :: Python :: 3 :: Only',
     'Topic :: Software Development :: Libraries',
     'Topic :: Scientific/Engineering',
@@ -60,7 +62,7 @@ data = ['pooch>=1.6.0']
 developer = [
     'pre-commit',
     'ipython',
-    "tomli; python_version < '3.11'",
+    "tomli; python_version <= '3.12'",
 ]
 docs = [
     'sphinx>=7.2',
