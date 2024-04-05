@@ -6,13 +6,13 @@
     },
     {
         "name": "0.1 (stable)",
-        "version": "0.1.1",
+        "version": "0.1.2",
         "url": "https://pol-insar.github.io/docs/stable/",
         "preferred": true
     },
     {
         "name": "0.1",
-        "version": "0.1.0",
+        "version": "0.1.2",
         "url": "https://pol-insar.github.io/docs/0.1/"
     }
 ]
