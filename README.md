@@ -25,6 +25,6 @@ See [LICENSE.txt](https://github.com/pysarpro/pysarpro/blob/main/LICENSE.txt).
 
 If you find this project useful, please cite:
 
-> Islam Mansour, and the scikit-image contributors. _pysarpro:
+> Islam Mansour, and the pysarpro contributors. _pysarpro:
 > SAR processing in Python_. PeerJ 2:e453 (2024)
-> <https://doi.org/10.7717/peerj.453>
+> <https://doi.org/10.7717/peerj.99196>
