@@ -743,7 +743,7 @@ class RatFile:
             # check if the block var meets the requirements
             block = self._check_block(block)
         else:
-            block = np.zeros(2 * len(self.shape), dtype=np.int)
+            block = np.zeros(2 * len(self.shape), dtype=int)
             block[1::2] = self.shape
 
         ind = tuple(map(lambda x, y: slice(x, y, None), block[::2], block[1::2]))
@@ -800,7 +800,7 @@ class RatFile:
             # check if the block var meets the requirements
             block = self._check_block(block)
         else:
-            block = np.zeros(2 * len(self.shape), dtype=np.int)
+            block = np.zeros(2 * len(self.shape), dtype=int)
             block[1::2] = self.shape
 
         ind = tuple(map(lambda x, y: slice(x, y, None), block[::2], block[1::2]))
