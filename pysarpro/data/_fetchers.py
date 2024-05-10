@@ -292,7 +292,7 @@ def download_all(directory=None, pattern=None):
             if pattern is not None and not re.search(pattern, data_filename):
                 continue
             # If the directory of unzipped folder exist, skipp downloading the data zip file
-            path_var = Path(directory).joinpath(data_filename)
+            path_var = Path(_image_fetcher.path).joinpath(data_filename)
             if path_var.suffix == '.zip':
                 if path_var.with_suffix('').is_dir():
                     continue
