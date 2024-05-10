@@ -11,6 +11,7 @@ import os.path as osp
 import re
 import shutil
 import zipfile
+from pathlib import Path
 
 from .. import __version__
 from ._registry import registry, registry_urls
@@ -290,6 +291,9 @@ def download_all(directory=None, pattern=None):
         for data_filename in _image_fetcher.registry:
             if pattern is not None and not re.search(pattern, data_filename):
                 continue
+            # If the directory of unzipped folder exist, skipp downloading the data zip file
+            if Path(directory).joinpath(data_filename).with_suffix('').is_dir():
+                continue
             file_path = _fetch(data_filename)
 
             # Copy to `directory` or implicit cache if it is not already there
@@ -300,9 +304,9 @@ def download_all(directory=None, pattern=None):
 
             # If the file is a zip file, unzip it and remove the zipped file
             if data_filename.endswith('.zip'):
-                with zipfile.ZipFile(dest_path, 'r') as zip_ref:
-                    zip_ref.extractall(osp.dirname(dest_path))
-                os.remove(dest_path)
+                with zipfile.ZipFile(file_path, 'r') as zip_ref:
+                    zip_ref.extractall(osp.dirname(file_path))
+                os.remove(file_path)
     finally:
         _image_fetcher.path = old_dir
 
