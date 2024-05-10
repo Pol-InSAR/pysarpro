@@ -10,6 +10,7 @@ import os
 import os.path as osp
 import re
 import shutil
+import zipfile
 
 from .. import __version__
 from ._registry import registry, registry_urls
@@ -296,6 +297,12 @@ def download_all(directory=None, pattern=None):
                 dest_path = osp.join(_image_fetcher.path, data_filename)
                 os.makedirs(osp.dirname(dest_path), exist_ok=True)
                 shutil.copy2(file_path, dest_path)
+
+            # If the file is a zip file, unzip it and remove the zipped file
+            if data_filename.endswith('.zip'):
+                with zipfile.ZipFile(dest_path, 'r') as zip_ref:
+                    zip_ref.extractall(osp.dirname(dest_path))
+                os.remove(dest_path)
     finally:
         _image_fetcher.path = old_dir
 

@@ -119,6 +119,8 @@ registry = {
     "data/tomosar/slc_10_HH.rat": "bd34eef79940c00ccafc80f637c6d979f90b79d1ee301d6327b59233f320dc9a",
     "data/tomosar/slc_10_HV.rat": "b435efcf0366f3bcf62ac57c81b371e60879edfac001ef2fad0452ce3200f24b",
     "data/tomosar/slc_10_VV.rat": "dac25b527e7e223861311a5fa81f18919ac9d9f9c77d1c1753f41d1070dd9c3f",
+    "data/DInSAR.zip": "14692fb707283319e645bda92a6924351528c149d731d2fbc63c72cf3e445f1c",
+
 }
 
 registry_urls = {
@@ -219,6 +221,8 @@ registry_urls = {
     "data/tomosar/slc_10_HH.rat": "https://zenodo.org/records/10797182/files/slc_10_HH.rat",
     "data/tomosar/slc_10_HV.rat": "https://zenodo.org/records/10797182/files/slc_10_HV.rat",
     "data/tomosar/slc_10_VV.rat": "https://zenodo.org/records/10797182/files/slc_10_VV.rat",
+    "data/DInSAR.zip": "https://zenodo.org/records/11171238/files/DInSAR.zip",
+
 }
 
 
