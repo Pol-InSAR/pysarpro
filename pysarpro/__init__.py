@@ -41,7 +41,7 @@ dtype_limits
 
 """
 
-__version__ = '0.1.4'
+__version__ = '0.1.5'
 
 from ._shared.version_requirements import ensure_python_version
 

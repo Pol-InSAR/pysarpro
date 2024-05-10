@@ -6,25 +6,25 @@
     },
     {
         "name": "0.1 (stable)",
-        "version": "0.1.4",
+        "version": "0.1.5",
         "url": "https://pol-insar.github.io/docs/stable/",
         "preferred": true
     },
     {
         "name": "0.1",
-        "version": "0.1.4",
-        "url": "https://pol-insar.github.io/docs/stable/",
+        "version": "0.1.5",
+        "url": "https://pol-insar.github.io/docs/0.1.5/",
         "preferred": true
     },
     {
         "name": "0.1.3",
         "version": "0.1.3",
-        "url": "https://pol-insar.github.io/docs/stable/",
+        "url": "https://pol-insar.github.io/docs/0.1.3/",
         "preferred": true
     },
     {
         "name": "0.1.2",
         "version": "0.1.2",
-        "url": "https://pol-insar.github.io/docs/0.1/"
+        "url": "https://pol-insar.github.io/docs/0.1.2/"
     }
 ]
